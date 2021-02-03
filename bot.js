@@ -63,7 +63,9 @@ client.on('message', async message => {
         let gameId = puzzle[8].split("/")[3].split("#")[0]
         let moveNumber = puzzle[8].split("/")[3].split("#")[1]
 
+        message.channel.send(moveNumber)
         moveNumber -= movesBack
+        message.channel.send(moveNumber)
 
         // message.channel.send(gameId[0])
 
