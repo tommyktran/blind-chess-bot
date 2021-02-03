@@ -235,6 +235,11 @@ client.on('message', async message => {
 
                 let nextMove = solutionArray[puzzles[x].solutionMove]
                 let yourMove = chess.move(move, {sloppy: true})
+                message.channel.send(typeof yourMove)
+                message.channel.send(typeof move)
+
+                message.channel.send(move)
+
                 if (typeof yourMove == "null" || typeof yourMove == "undefined") {
                     yourMove = "Invalid move"
                 } else {
@@ -245,6 +250,11 @@ client.on('message', async message => {
                 if (yourMove == nextMove) {
                     message.channel.send(yourMove)
                     message.channel.send(nextMove)
+                    message.channel.send(puzzles[x].solutionMove)
+                    message.channel.send(solutionArray.length - 1)
+
+
+
                     if (puzzles[x].solutionMove !== solutionArray.length - 1) {
                         message.channel.send("Correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove + 1] + ". What's the next move?")
                         puzzles[x].solutionMove += 2
