@@ -34,10 +34,12 @@ client.on('message', async message => {
 
         //0       ,1  ,2    ,3     ,4              ,5         ,6      ,7     ,8
         //PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
-        let gameId = puzzle[8].split("/")[3].split("#")
+        let gameId = puzzle[8].split("/")[3].split("#")[0]
+        let moveNumber = puzzle[8].split("/")[3].split("#")[1]
 
-        message.channel.send(gameId[0])
-        getLichessGamebyId(gameId[0]).then(data => data.text())
+        // message.channel.send(gameId[0])
+
+        getLichessGamebyId(gameId).then(data => data.text())
             .then(result => {
                 message.channel.send("OK")
                 message.channel.send(result)
