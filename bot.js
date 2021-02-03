@@ -7,6 +7,8 @@ const prefix = "bc!"
 var fs = require('fs');
 
 const { Chess } = require('chess.js')
+const fetch = require('node-fetch');
+
 const chess = new Chess()
 
 var data = fs.readFileSync('lichess_db_puzzle.csv')
@@ -20,6 +22,28 @@ client.on('ready', () => {
     console.log('I am ready!');
 
 });
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+async function getLichessGamebyId(id) {
+    // It gets the PGN of a specific game on Lichess.
+    // Read the data with
+    // getLichessGamebyId(gameId).then(data => data.text())
+    // .then(result => {
+    //     console.log(result)
+    // }
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+      
+      return fetch("https://lichess.org/game/export/" + id + "?clocks=false&evals=false", requestOptions)
+        // .then(response => response.text())
+        // .then(result => {console.log(result);})
+        .catch(error => message.channel.send(error));
+}
 
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -48,27 +72,7 @@ client.on('message', async message => {
     }
 
 
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
-    }
-
-    async function getLichessGamebyId(id) {
-        // It gets the PGN of a specific game on Lichess.
-        // Read the data with
-        // getLichessGamebyId(gameId).then(data => data.text())
-        // .then(result => {
-        //     console.log(result)
-        // }
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-          };
-          
-          return fetch("https://lichess.org/game/export/" + id + "?clocks=false&evals=false", requestOptions)
-            // .then(response => response.text())
-            // .then(result => {console.log(result);})
-            .catch(error => message.channel.send(error));
-    }
+    
 })
  
 
