@@ -239,7 +239,7 @@ client.on('message', async message => {
                     }
                     
                 } else {
-                    solutionString.join(" ")
+                    solutionString = solutionString.join(" ")
                     message.channel.send(solutionString)
                     message.channel.send("Incorrect. Try again.")
                 }
