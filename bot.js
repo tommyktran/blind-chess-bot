@@ -19,11 +19,14 @@ var data = fs.readFileSync('lichess_db_puzzle.csv')
     .map(e => e.split(',').map(e => e.trim())); // split each line to array
 
 client.on('ready', () => {
-
     console.log('I am ready!');
-    client.user.setPresence({ game: { name: 'with discord.js' , type: 'WATCHING' }, status: 'idle' })
-    .then(console.log)
-    .catch(console.error);
+    bot.user.setPresence({
+        status: 'online',
+        activity: {
+            name: 'with depression',
+            type: 'STREAMING',
+        }
+    })
 });
 
 function getRandomInt(max) {
