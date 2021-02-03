@@ -221,6 +221,11 @@ client.on('message', async message => {
                 for (y = 0; y < puzzles[x].solutionMove; y++) {
                     solutionString.push(chess.move(solutionArray[y], {sloppy: true}).san)
                     chess.undo()
+                    message.channel.send(y)
+                    message.channel.send(solutionArray[y])
+
+
+                    message.channel.send(solutionString.join(" "))
                 }
                 
                 for (y = 0; y < puzzles[x].solutionMove - 1; y++) {
