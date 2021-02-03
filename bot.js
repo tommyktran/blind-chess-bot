@@ -201,6 +201,7 @@ client.on('message', async message => {
         let messageArray = message.content.split(" ");
         let move = messageArray[1]
         let puzzleInChannel = false
+        let doneWithPuzzle = false
         for (x in puzzles) {
             if (puzzles[x].message.channel == message.channel) {
 
@@ -254,7 +255,7 @@ client.on('message', async message => {
                     message.channel.send("**" + solutionString + "**")
                     if (solutionArray.length - 1 == puzzles[x].solutionMove) {
                         message.channel.send("Correct! That's the end of the puzzle.")
-                        puzzles = puzzles.splice(x, 1)
+                        doneWithPuzzle = true
                     } else {
                         for (y = 0; y <= puzzles[x].solutionMove; y++) {
                             chess.move(solutionArray[y], {sloppy: true})
@@ -262,10 +263,6 @@ client.on('message', async message => {
                         message.channel.send("Correct! Opponent responded with " + chess.move(solutionArray[(puzzles[x].solutionMove)+1], {sloppy: true}).san + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     }
-                    message.channel.send(puzzles[x].solutionMove)
-                    message.channel.send(solutionArray.length)
-                    message.channel.send(solutionArray.length -2)
-                    message.channel.send(solutionArray[(puzzles[x].solutionMove)])
 
 
                     
@@ -277,6 +274,13 @@ client.on('message', async message => {
                     message.channel.send("Incorrect. Try again.")
                 }
                 chess.reset()
+            }
+        }
+        if (doneWithPuzzle == true) {
+            for (x in puzzles) {
+                if (puzzles[x].message.channel == message.channel) {
+                    puzzles = puzzles.splice(x, 1)
+                }
             }
         }
         if (puzzleInChannel == false) {
