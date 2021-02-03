@@ -52,7 +52,7 @@ function getJinChess(fen, player, moves) {
     URI += fen
     URI += "&tm=" + player
     URI += "&s=xl"
-    player = player.split("")[0].toUpperCase().join("")
+    // player = player.split("")[0].toUpperCase().join("")
     URI += "&tt=" + player + " to Move"
     URI += "&ct=" + moves
     URI += "&ps=merida-flat&cm=o"
