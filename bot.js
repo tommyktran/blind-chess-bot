@@ -232,11 +232,10 @@ client.on('message', async message => {
 
                 chess.reset()
                 goToMove(moves, puzzles[x].moveNumber + puzzles[x].movesBack + puzzles[x].solutionMove)
+                message.channel.send(chess.fen())
 
                 let nextMove = solutionArray[puzzles[x].solutionMove]
                 let yourMove = chess.move(move, {sloppy: true})
-                message.channel.send(typeof yourMove)
-                message.channel.send(typeof move)
 
                 message.channel.send(solutionArray.join(" "))
 
