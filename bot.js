@@ -74,8 +74,8 @@ client.on('message', async message => {
     if (command == "puzzle") {
         let messageArray = message.content.split(" ");
         let level = 3
-        if (messageArray.length == 2 && typeof parseInt(messageArray[1]) == "number") {
-            level = messageArray[1];
+        if (messageArray.length == 2 && typeof parseInt(messageArray[1]) == "number" && !(messageArray[1].includes("-"))) {
+            level = parseInt(messageArray[1]);
         }
         let movesBack = level * 2
         let movesToVisualize = []
