@@ -229,7 +229,7 @@ client.on('message', async message => {
                 message.channel.send(solutionMove)
 
                 
-                for (y = 0; y < solutionArray[puzzles[x].solutionMove]; y++) {
+                for (y = 0; y < solutionMove; y++) {
                     solutionString.push(solutionArray[y])
                     message.channel.send(solutionArray[y])
                 }
