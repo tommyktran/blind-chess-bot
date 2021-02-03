@@ -111,7 +111,6 @@ client.on('message', async message => {
                     player = "White"
                 }
                 message.channel.send(getJinChess(chess.fen(), player))
-                message.channel.send
 
                 const embed = new Discord.MessageEmbed()
                     .setTitle("Blind Tactic")
