@@ -248,16 +248,18 @@ client.on('message', async message => {
                         message.channel.send("Correct! That's the end of the puzzle.")
                         puzzles = puzzles.splice(x, 1)
                     } else {
-                        for (y = 0; y < puzzles[x].solutionMove; y++) {
-                            chess.move(solutionArray[puzzles[x].y], {sloppy: true})
-                        }                        
+                        for (y = 0; y <= puzzles[x].solutionMove; y++) {
+                            chess.move(solutionArray[y], {sloppy: true})
+                        }
                         message.channel.send("Correct! Opponent responded with " + chess.move(solutionArray[(puzzles[x].solutionMove)+1], {sloppy: true}).san + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     }
                     
                 } else {
-                    solutionString = solutionString.join(" ")
-                    message.channel.send("**" + solutionString + "**")
+                    if (solutionString.length != 0) {
+                        solutionString = solutionString.join(" ")
+                        message.channel.send("**" + solutionString + "**")
+                    }
                     message.channel.send("Incorrect. Try again.")
                 }
                 chess.reset()
