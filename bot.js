@@ -60,7 +60,7 @@ client.on('message', async message => {
 
         //0       ,1  ,2    ,3     ,4              ,5         ,6      ,7     ,8
         //PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
-        if (puzzle[8].contains("/black")) {
+        if (puzzle[8].includes("/black")) {
             puzzle[8] = puzzle[8].replace("/black", "")
         }
         let gameId = puzzle[8].split("/")[3].split("#")[0]
