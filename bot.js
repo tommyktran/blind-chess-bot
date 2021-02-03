@@ -222,7 +222,7 @@ client.on('message', async message => {
                     chess.move(solutionArray[y], {sloppy: true})
                     message.channel.send(chess.fen())
                 }
-                message.channel.send(`\`\`\`${puzzles[x].solutionMove}\n${solutionArray.length}\n${solutionArray.length -1}\n${solutionArray[(puzzles[x].solutionMove)]}\`\`\``)
+                message.channel.send(`\`\`\`"W"\n${puzzles[x].solutionMove}\n${solutionArray.length}\n${solutionArray.length -1}\n${solutionArray[(puzzles[x].solutionMove)]}\`\`\``)
 
                 let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
 
