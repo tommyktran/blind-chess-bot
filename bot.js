@@ -90,6 +90,9 @@ client.on('message', async message => {
 
                 message.channel.send(puzzle)
                 message.channel.send(movesToVisualize.join(" "))
+                message.channel.send(chess.ascii())
+                message.channel.send(moves)
+
             })
 
     }
