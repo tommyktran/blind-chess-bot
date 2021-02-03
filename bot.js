@@ -189,6 +189,7 @@ client.on('message', async message => {
 
                 //Remove the puzzle from puzzles array
                 puzzles.splice(x, 1)
+                message.channel.send("EEE")
                 chess.reset()
             }
         }
