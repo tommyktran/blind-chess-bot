@@ -114,8 +114,8 @@ client.on('message', async message => {
                 const embed = new Discord.MessageEmbed()
                     .setTitle("Blind Tactic")
                     .setImage(getJinChess(chess.fen(), player))
-                    .setDescription("Visualize the moves below, then find the tactic that happens after.\n\n" + "**" + movesToVisualize.join(" ") + "**")
-                    .setFooter("(" + player + " to move)")
+                    // .setDescription()
+                    .setFooter("Visualize the moves below, then find the tactic that happens after.\n\n" + "**" + movesToVisualize.join(" ") + "**" + "\n\n(" + player + " to move)")
 
                 message.channel.send(embed)
 
