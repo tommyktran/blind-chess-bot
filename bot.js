@@ -24,9 +24,9 @@ client.on('message', async message => {
     const command = args.shift().toLowerCase();
 
     if (command == "puzzle") {
-        message.channel.send("test")
+        message.channel.send("test");
     }
-}
+})
  
 
 // THIS  MUST  BE  THIS  WAY
