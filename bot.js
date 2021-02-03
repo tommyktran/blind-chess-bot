@@ -142,7 +142,7 @@ client.on('message', async message => {
                         puzzleInChannel = true
                     }
                 }
-                if (puzzleInChannel == true) {
+                if (puzzleInChannel == false) {
                     puzzles.push(puzzleMessageObject)
                 }
 
