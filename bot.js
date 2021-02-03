@@ -76,13 +76,43 @@ client.on('message', async message => {
     if (command == "puzzle") {
         let messageArray = message.content.split(" ");
         let level = 3
+        let rating = 0
         if (messageArray.length == 2 && typeof parseInt(messageArray[1]) == "number" && !(messageArray[1].includes("-"))) {
             level = parseInt(messageArray[1]);
+        } else if (messageArray.length == 3 && typeof parseInt(messageArray[1]) == "number" && !(messageArray[1].includes("-"))
+            && messageArray[2].split("-").length == 2) {
+            level = parseInt(messageArray[1]);
+            rating = messageArray[2].split("-")
+        } else if (messageArray.length == 2 && messageArray[1].split("-").length == 2) {
+            rating = messageArray[2].split("-")
+        }
+        if (rating.isArray()) {
+            for (x in rating) {
+                if (typeof parseInt(rating[x]) !== "number") {
+                    rating = 0
+                } 
+            }
         }
         let movesBack = level * 2
         let movesToVisualize = []
+        
+        let puzzle
         // Select a random puzzle from lichess_db_puzzle.csv
-        let puzzle = data[getRandomInt(data.length)]
+        if (rating != 0) {
+            puzzle = data[getRandomInt(data.length)]
+        } else {
+            for (y = 0; y < 100; y ++) {
+                let thing = data[getRandomInt(data.length)]
+                if (thing[3] >= rating[0] && thing[3] <= rating[1]) {
+                    puzzle = thing
+                    y+= 100
+                }
+                if (y == 99) {
+                    message.channel.send("Puzzle within rating range not found. Random puzzle generated.")
+                    puzzle = data[getRandomInt(data.length)]
+                }
+            }
+        }
 
         //0       ,1  ,2    ,3     ,4              ,5         ,6      ,7     ,8
         //PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
