@@ -186,6 +186,9 @@ client.on('message', async message => {
                     solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
                 }
                 message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
+
+                //Remove the puzzle from puzzles array
+                puzzles.splice(x, 1)
                 chess.reset()
             }
         }
@@ -217,12 +220,18 @@ client.on('message', async message => {
                 for (y = 0; y < solutionArray[puzzles[x].solutionMove]; y++) {
                     solutionString.push(solutionArray[y])
                 }
-                if (move == nextMove) {
+                if (chess.move(move, {sloppy: true}).san == nextMove) {
                     solutionString.push(solutionArray[puzzles[x].solutionMove+1])
                     solutionString = solutionString.join(" ")
                     message.channel.send(solutionString)
-                    message.channel.send(nextMove + ": correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove+1] + ". What's the next move?")
-                    puzzles[x].solutionMove += 2
+                    if (solutionArray.length - 1 == puzzles[x].solutionMove) {
+                        message.channel.send(nextMove + ": correct! That's the end of the puzzle.")
+                        puzzles.splice(x, 1)
+                    } else {
+                        message.channel.send(nextMove + ": correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove+1] + ". What's the next move?")
+                        puzzles[x].solutionMove += 2
+                    }
+                    
                 } else {
                     solutionString.join(" ")
                     message.channel.send(solutionString)
