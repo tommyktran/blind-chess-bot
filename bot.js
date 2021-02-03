@@ -46,15 +46,12 @@ async function getLichessGamebyId(id) {
         .catch(error => message.channel.send(error));
 }
 
-function getJinChess(fen, player, moves) {
+function getJinChess(fen, player) {
     let string = "http://www.jinchess.com/chessboard/?p=" 
     let URI = ""
     URI += fen
     URI += "&tm=" + player
     URI += "&s=xl"
-    // player = player.split("")[0].toUpperCase().join("")
-    URI += "&tt=" + player + " to Move"
-    URI += "&ct=" + moves
     URI += "&ps=merida-flat&cm=o"
     URI = encodeURI(URI)
     string += URI
@@ -109,19 +106,20 @@ client.on('message', async message => {
                 }
                 
                 if (chess.turn() == "b") {
-                    player = "black"
+                    player = "Black"
                 } else {
-                    player = "white"
+                    player = "White"
                 }
-                message.channel.send("OK")
-                message.channel.send(chess.fen())
-                message.channel.send(player)
-                message.channel.send(movesToVisualize)
-                message.channel.send(encodeURI("ero ero"))
+                message.channel.send(getJinChess(chess.fen(), player))
+                message.channel.send
 
+                const embed = new Discord.MessageEmbed()
+                    .setTitle("Blind Tactic")
+                    .setImage(getJinChess(chess.fen(), player))
+                    .setDescription(movesToVisualize.join(" "))
+                    .setFooter("(" + player + "to move)")
 
-                message.channel.send(getJinChess(chess.fen(), player, movesToVisualize.join(" ")))
-                
+                channel.send(embed)
 
 
                 // message.channel.send(puzzle)
