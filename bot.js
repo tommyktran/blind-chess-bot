@@ -64,7 +64,7 @@ client.on('message', async message => {
         let moveNumber = puzzle[8].split("/")[3].split("#")[1]
 
         message.channel.send(moveNumber)
-        moveNumber -= movesBack
+        moveNumber -= movesBack - 1
         message.channel.send(moveNumber)
 
         // message.channel.send(gameId[0])
@@ -77,7 +77,7 @@ client.on('message', async message => {
 
                 for (let y = 0; y <= moveNumber + movesBack; y++) {
                     chess.move(moves[y]);
-                    if (y <= moveNumber) {
+                    if (y > moveNumber) {
                         movesToVisualize.push(moves[y])
                     }
                 }
