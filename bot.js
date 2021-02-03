@@ -205,7 +205,8 @@ client.on('message', async message => {
 
     if (command == "move") {
         let messageArray = message.content.split(" ");
-        let move = messageArray[1]
+        let move = ""
+        move = messageArray[1]
         let puzzleInChannel = false
         let puzzle
 
@@ -239,8 +240,8 @@ client.on('message', async message => {
                 if (yourMove == nextMove) {
                     message.channel.send(yourMove)
                     message.channel.send(nextMove)
-                    if (solutionMove !== solutionArray.length - 1) {
-                        message.channel.send("Correct! Opponent responded with " + solutionArray[solutionMove + 1] + ". What's the next move?")
+                    if (puzzles[x].solutionMove !== solutionArray.length - 1) {
+                        message.channel.send("Correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove + 1] + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     } else {
                         message.channel.send("Correct! That's the end of the puzzle.")
