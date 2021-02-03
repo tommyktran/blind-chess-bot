@@ -45,6 +45,18 @@ async function getLichessGamebyId(id) {
         .catch(error => message.channel.send(error));
 }
 
+function getJinChess(fen, player, moves) {
+    let URL = "http://www.jinchess.com/chessboard/?p="
+    URL += fen
+    URL += "&tm=" + player
+    URL += "&s=xl"
+    player[0] = player[0].toUpperCase()
+    URL += "&tt=" + player + " to Move"
+    URL += "&ct=" + moves
+    URL += "&ps=merida-flat&cm=o"
+    return URL
+}
+
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -66,9 +78,10 @@ client.on('message', async message => {
         let gameId = puzzle[8].split("/")[3].split("#")[0]
         let moveNumber = puzzle[8].split("/")[3].split("#")[1]
 
-        message.channel.send(moveNumber)
+        let puzzleLink = "https://lichess.org/training/" + puzzle[0]
+        let player
+
         moveNumber -= movesBack
-        message.channel.send(moveNumber)
 
         // message.channel.send(gameId[0])
 
@@ -90,13 +103,19 @@ client.on('message', async message => {
                 for (let y = 0; y <= moveNumber; y++) {
                     chess.move(moves[y]);
                 }
-                // We are currently at the starting position of the blindfold tactic
-                // Now we need to look at the moves in the future.
+                
+                if (chess.turn() == "b") {
+                    player = "black"
+                } else {
+                    player = "white"
+                }
+                message.channel.send(getJinChess(chess.fen, player, moves))
 
-                message.channel.send(puzzle)
-                message.channel.send(movesToVisualize.join(" "))
-                message.channel.send(chess.ascii())
-                message.channel.send(moves)
+
+                // message.channel.send(puzzle)
+                // message.channel.send(movesToVisualize.join(" "))
+                // message.channel.send(chess.ascii())
+                // message.channel.send(moves)
 
             })
 
