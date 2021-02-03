@@ -169,9 +169,12 @@ client.on('message', async message => {
         for (x in puzzles) {
             if (puzzles[x].message.channel == message.channel) {
                 puzzleInChannel = true
-                message.channel.send(puzzles[x].pgn)
                 chess.load_pgn(puzzles[x].pgn, {sloppy: true})
                 let moves = chess.history();
+                message.channel.send(moves)
+                message.channel.send(puzzles[x].moveNumber)
+                message.channel.send(puzzles[x].movesBack)
+
                 chess.reset();
 
                 for (let y = 0; y <= puzzles[x].moveNumber + puzzles[x].movesBack; y++) {
