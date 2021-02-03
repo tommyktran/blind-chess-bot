@@ -227,7 +227,7 @@ client.on('message', async message => {
                 let solutionArray = puzzles[x].puzzle[2].split(" ")
                 solutionArray.shift()
                 
-                for (y = 0; y < solutionArray.length-1; y++) {
+                for (y = 0; y < solutionArray.length; y++) {
                     solutionArray[y] = chess.move(solutionArray[y], {sloppy: true}).san
                     message.channel.send(chess.fen())
                     message.channel.send(solutionArray.join(" "))
