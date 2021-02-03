@@ -64,7 +64,7 @@ function getJinChess(fen, player) {
     return string
 }
 
-var puzzles = ["HI"]
+var puzzles = []
 
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -131,23 +131,23 @@ client.on('message', async message => {
                     .setDescription("Rating: **" + puzzle[3] + "**\n\nVisualize the moves below, then find the tactic that happens after.\n\n" + "**" + movesToVisualize.join(" ") + "**")
                     .setFooter("(" + player + " to move)")
 
-                // let puzzleInChannel = false;
-                // let puzzleMessageObject = {
-                //     message1: message,
-                //     puzzle1: puzzle
-                // }
-                // for (x in puzzles) {
-                //     if (puzzles[x].message1.channel == message.channel) {
-                //         puzzles[x] = puzzleMessageObject
-                //         puzzleInChannel = true
-                //     }
-                // }
-                // if (puzzleInChannel == false) {
-                //     puzzles.push(puzzleMessageObject)
-                // }
+                let puzzleInChannel = false;
+                let puzzleMessageObject = {
+                    message1: message,
+                    puzzle1: puzzle
+                }
+                for (x in puzzles) {
+                    if (puzzles[x].message1.channel == message.channel) {
+                        puzzles[x] = puzzleMessageObject
+                        puzzleInChannel = true
+                    }
+                }
+                if (puzzleInChannel == false) {
+                    puzzles.push(puzzleMessageObject)
+                }
 
-                // message.channel.send("```"+puzzles+"```")
-                // message.channel.send(puzzles.length)
+                message.channel.send("```"+puzzles+"```")
+                message.channel.send(puzzles.length)
 
 
                 message.channel.send(embed)
