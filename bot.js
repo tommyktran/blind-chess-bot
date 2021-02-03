@@ -277,6 +277,7 @@ client.on('message', async message => {
             }
         }
         if (doneWithPuzzle == true) {
+            message.channel.send("LOL")
             for (x in puzzles) {
                 if (puzzles[x].message.channel == message.channel) {
                     puzzles = puzzles.splice(x, 1)
