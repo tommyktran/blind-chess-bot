@@ -186,6 +186,7 @@ client.on('message', async message => {
                     // solutionResult.push(thing)
                     // message.channel.send(thing)
                     message.channel.send(solutionArray[x])
+                    message.channel.send(chess.move(solutionArray[x], {sloppy: true}).san)
                 }
                 message.channel.send(solutionResult)
                 message.channel.send(solutionResult.toString())
