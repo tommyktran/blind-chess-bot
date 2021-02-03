@@ -135,7 +135,10 @@ client.on('message', async message => {
                 let puzzleInChannel = false;
                 let puzzleMessageObject = {
                     message: message,
-                    puzzle: puzzle
+                    puzzle: puzzle,
+                    moveNumber: moveNumber,
+                    movesBack: movesBack,
+                    pgn: result
                 }
                 for (x in puzzles) {
                     if (puzzles[x].message.channel == message.channel) {
@@ -149,7 +152,7 @@ client.on('message', async message => {
 
 
                 message.channel.send(embed)
-
+                chess.reset()
 
                 // message.channel.send(puzzle)
                 // message.channel.send(moveNumber)
@@ -161,19 +164,32 @@ client.on('message', async message => {
             })
 
     }
-    // if (command == "answer") {
-    //     let puzzleInChannel = false
-    //     for (x in puzzles) {
-    //         if (puzzles[x].message1.channel == message.channel) {
-    //             puzzleInChannel = true
+    if (command == "solution") {
+        let puzzleInChannel = false
+        for (x in puzzles) {
+            if (puzzles[x].message.channel == message.channel) {
+                puzzleInChannel = true
 
-    //             puzzles[x].message
-    //         }
-    //     }
-    //     if (puzzleInChannel == false) {
-    //         message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
-    //     }
-    // }
+                chess.load_pgn(puzzles[x].pgn, {sloppy: true})
+                let moves = chess.history();
+                chess.reset();
+
+                for (let y = 0; y < puzzles[x].moveNumber; y++) {
+                    chess.move(moves[y]);
+                }
+
+                let solutionArray = puzzles[x].puzzle[2].split(" ")
+                let solutionResult = []
+                for (x in solutionArray) {
+                    solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
+                }
+                message.channel.send(solutionResult.join(" "))
+            }
+        }
+        if (puzzleInChannel == false) {
+            message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
+        }
+    }
 
 
     
