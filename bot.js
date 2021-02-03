@@ -235,9 +235,9 @@ client.on('message', async message => {
 
                 let yourMove = chess.move(move, {sloppy: true})
 
-                chess.undo()
                 if (typeof yourMove == "object" && yourMove !== null) {
                     yourMove = yourMove.san
+                    chess.undo()
                 } else {
                     yourMove = "Invalid move"
                 }
