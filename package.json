@@ -1,0 +1,13 @@
+{
+  "name": "blind-chess-bot",
+  "description": "A Discord bot that generates blind chess puzzles",
+  "version": "0.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "request": "2.81.0"
+  }
+}
