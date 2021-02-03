@@ -205,8 +205,7 @@ client.on('message', async message => {
 
     if (command == "move") {
         let messageArray = message.content.split(" ");
-        let move = ""
-        move = messageArray[1]
+        let move = messageArray[1]
         let puzzleInChannel = false
         let puzzle
 
@@ -236,7 +235,7 @@ client.on('message', async message => {
 
                 let nextMove = solutionArray[puzzles[x].solutionMove]
                 let yourMove = chess.move(move, {sloppy: true})
-                if (typeof yourMove == "null") {
+                if (typeof yourMove == "null" || typeof yourMove == "undefined") {
                     yourMove = "Invalid move"
                 } else {
                     yourMove = yourMove.san
@@ -253,12 +252,9 @@ client.on('message', async message => {
                         message.channel.send("Correct! That's the end of the puzzle.")
                         puzzles = puzzles.splice(x, 1)
                     }
-                    
                 } else {
                     message.channel.send(yourMove)
                     message.channel.send(nextMove)
-
-
                     message.channel.send("Incorrect. Try again.")
                 }
 
