@@ -188,8 +188,7 @@ client.on('message', async message => {
                 message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
 
                 //Remove the puzzle from puzzles array
-                puzzles.splice(x, 1)
-                message.channel.send("EEE")
+                puzzles = puzzles.splice(x, 1)
                 chess.reset()
             }
         }
@@ -219,6 +218,7 @@ client.on('message', async message => {
                 let solutionString = []
                 let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
                 let yourMove = chess.move(move, {sloppy: true}).san
+                
                 for (y = 0; y < solutionArray[puzzles[x].solutionMove]; y++) {
                     solutionString.push(solutionArray[y])
                     message.channel.send(solutionArray[y])
