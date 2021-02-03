@@ -47,16 +47,18 @@ async function getLichessGamebyId(id) {
 }
 
 function getJinChess(fen, player, moves) {
-    let URL = "http://www.jinchess.com/chessboard/?p="
-    URL += fen
-    URL += "&tm=" + player
-    URL += "&s=xl"
+    let string = "http://www.jinchess.com/chessboard/?p=" 
+    let URI = ""
+    URI += fen
+    URI += "&tm=" + player
+    URI += "&s=xl"
     player = player.split("")[0].toUpperCase().join("")
-    URL += "&tt=" + player + " to Move"
-    URL += "&ct=" + moves
-    URL += "&ps=merida-flat&cm=o"
-    URL = encodeURIComponent(URL)
-    return URL
+    URI += "&tt=" + player + " to Move"
+    URI += "&ct=" + moves
+    URI += "&ps=merida-flat&cm=o"
+    URI = encodeURIComponent(URI)
+    string += URI
+    return string
 }
 
 client.on('message', async message => {
