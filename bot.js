@@ -184,11 +184,7 @@ client.on('message', async message => {
                 solutionArray.shift()
                 let solutionResult = []
                 for (x in solutionArray) {
-                    // let thing = (chess.move(solutionArray[x], {sloppy: true})).san
-                    // solutionResult.push(thing)
-                    // message.channel.send(thing)
-                    message.channel.send(solutionArray[x])
-                    message.channel.send((chess.move(solutionArray[x], {sloppy: true})).san)
+                    solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
                 }
                 message.channel.send(solutionResult)
                 message.channel.send(solutionResult.toString())
