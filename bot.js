@@ -138,7 +138,8 @@ client.on('message', async message => {
                     puzzle: puzzle,
                     moveNumber: moveNumber,
                     movesBack: movesBack,
-                    pgn: result
+                    pgn: result,
+                    solutionMove: 0
                 }
                 for (x in puzzles) {
                     if (puzzles[x].message.channel == message.channel) {
@@ -178,17 +179,14 @@ client.on('message', async message => {
                     chess.move(moves[y]);
                 }
 
-                message.channel.send(puzzles[x].puzzle[2])
-                message.channel.send(getJinChess(chess.fen(), "white"))
                 let solutionArray = puzzles[x].puzzle[2].split(" ")
                 solutionArray.shift()
                 let solutionResult = []
                 for (x in solutionArray) {
                     solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
                 }
-                message.channel.send(solutionResult)
-                message.channel.send(solutionResult.toString())
-                message.channel.send(solutionResult.join(" "))
+                message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
+                chess.reset()
             }
         }
         if (puzzleInChannel == false) {
@@ -196,6 +194,47 @@ client.on('message', async message => {
         }
     }
 
+    if (command == "move") {
+        let messageArray = message.content.split(" ");
+        let move = messageArray[1]
+        let puzzleInChannel = false
+        for (x in puzzles) {
+            if (puzzles[x].message.channel == message.channel) {
+                puzzleInChannel = true
+                chess.load_pgn(puzzles[x].pgn, {sloppy: true})
+                let moves = chess.history();
+
+                chess.reset();
+
+                for (let y = 0; y < (puzzles[x].moveNumber + puzzles[x].movesBack); y++) {
+                    chess.move(moves[y]);
+                }
+
+                let solutionArray = puzzles[x].puzzle[2].split(" ")
+                solutionArray.shift()
+                let solutionString = []
+                let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
+                for (y = 0; y < solutionArray[puzzles[x].solutionMove]; y++) {
+                    solutionString.push(solutionArray[y])
+                }
+                if (move == nextMove) {
+                    solutionString.push(solutionArray[puzzles[x].solutionMove+1])
+                    solutionString = solutionString.join(" ")
+                    message.channel.send(solutionString)
+                    message.channel.send(nextMove + ": correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove+1] + ". What's the next move?")
+                    puzzles[x].solutionMove += 2
+                } else {
+                    solutionString.join(" ")
+                    message.channel.send(solutionString)
+                    message.channel.send(nextMove + ": incorrect. Try again.")
+                }
+                chess.reset()
+            }
+        }
+        if (puzzleInChannel == false) {
+            message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
+        }
+    }
 
     
 })
