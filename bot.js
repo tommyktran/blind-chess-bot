@@ -119,7 +119,7 @@ client.on('message', async message => {
                 const embed = new Discord.MessageEmbed()
                     .setTitle("Blind Tactic - Level " + level)
                     .setImage(getJinChess(chess.fen(), player))
-                    .setDescription("Visualize the moves below, then find the tactic that happens after.\n\n" + "**__" + movesToVisualize.join(" ") + "__**")
+                    .setDescription("Rating: " + puzzle[3] + "\nVisualize the moves below, then find the tactic that happens after.\n\n" + "**__" + movesToVisualize.join(" ") + "__**")
                     .setFooter("(" + player + " to move)")
 
                 message.channel.send(embed)
