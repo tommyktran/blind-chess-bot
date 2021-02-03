@@ -8,6 +8,7 @@ var fs = require('fs');
 
 const { Chess } = require('chess.js')
 const fetch = require('node-fetch');
+const { url } = require('inspector');
 
 const chess = new Chess()
 
@@ -50,10 +51,11 @@ function getJinChess(fen, player, moves) {
     URL += fen
     URL += "&tm=" + player
     URL += "&s=xl"
-    player[0] = player[0].toUpperCase()
+    player = player.split("")[0].toUpperCase().join("")
     URL += "&tt=" + player + " to Move"
     URL += "&ct=" + moves
     URL += "&ps=merida-flat&cm=o"
+    URL = encodeURI(URL)
     return URL
 }
 
@@ -109,7 +111,7 @@ client.on('message', async message => {
                 } else {
                     player = "white"
                 }
-                message.channel.send(getJinChess(chess.fen, player, moves))
+                message.channel.send(getJinChess(chess.fen, player, movesToVisualize))
 
 
                 // message.channel.send(puzzle)
