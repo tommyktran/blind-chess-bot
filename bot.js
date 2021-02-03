@@ -233,6 +233,7 @@ client.on('message', async message => {
                     yourMove = "Invalid move"
                 }
                 message.channel.send(solutionArray.join(" "))
+                message.channel.send(`\`\`\`\`${puzzles[x].solutionMove}\n${solutionArray.length}\n${message.channel.send(solutionArray.length -2)}\n${solutionArray[(puzzles[x].solutionMove)]}\`\`\``)
                 // message.channel.send(nextMove)
                 // message.channel.send(yourMove)
                 // message.channel.send(solutionArray[puzzles[x].solutionMove])
