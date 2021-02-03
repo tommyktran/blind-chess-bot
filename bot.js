@@ -21,7 +21,9 @@ var data = fs.readFileSync('lichess_db_puzzle.csv')
 client.on('ready', () => {
 
     console.log('I am ready!');
-
+    client.user.setPresence({ game: { name: 'with discord.js' , type: 'WATCHING' }, status: 'idle' })
+    .then(console.log)
+    .catch(console.error);
 });
 
 function getRandomInt(max) {
