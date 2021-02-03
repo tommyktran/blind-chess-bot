@@ -235,7 +235,13 @@ client.on('message', async message => {
                 goToMove(moves, puzzles[x].moveNumber + puzzles[x].movesBack + puzzles[x].solutionMove)
 
                 let nextMove = solutionArray[puzzles[x].solutionMove]
-                let yourMove = chess.move(move, {sloppy: true}).san
+                let yourMove = chess.move(move, {sloppy: true})
+                if (typeof yourMove == "null") {
+                    yourMove = "Invalid move"
+                } else {
+                    yourMove = yourMove.san
+                    chess.undo()
+                }
                 
                 if (yourMove == nextMove) {
                     message.channel.send(yourMove)
