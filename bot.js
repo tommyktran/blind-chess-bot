@@ -169,7 +169,7 @@ client.on('message', async message => {
         for (x in puzzles) {
             if (puzzles[x].message.channel == message.channel) {
                 puzzleInChannel = true
-
+                message.channel.send(puzzles[x].pgn)
                 chess.load_pgn(puzzles[x].pgn, {sloppy: true})
                 let moves = chess.history();
                 chess.reset();
