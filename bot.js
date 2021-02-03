@@ -176,11 +176,10 @@ client.on('message', async message => {
 
                 for (let y = 0; y <= (puzzles[x].moveNumber + puzzles[x].movesBack); y++) {
                     chess.move(moves[y]);
-                    message.channel.send("H")
                 }
 
                 message.channel.send(puzzles[x].puzzle[2])
-                message.channel.send(getJinChess(puzzles[x].fen, "white"))
+                message.channel.send(getJinChess(chess.fen(), "white"))
                 let solutionArray = puzzles[x].puzzle[2].split(" ")
                 let solutionResult = []
                 for (x in solutionArray) {
