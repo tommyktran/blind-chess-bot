@@ -39,6 +39,7 @@ client.on('message', async message => {
         message.channel.send(gameId[0])
         getLichessGamebyId(gameId[0]).then(data => data.text())
             .then(result => {
+                message.channel.send("OK")
                 message.channel.send(result)
             })
 
@@ -64,7 +65,7 @@ client.on('message', async message => {
           return fetch("https://lichess.org/game/export/" + id + "?clocks=false&evals=false", requestOptions)
             // .then(response => response.text())
             // .then(result => {console.log(result);})
-            .catch(error => console.log('error', error));
+            .catch(error => message.channel.send(error));
     }
 })
  
