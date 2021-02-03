@@ -218,10 +218,10 @@ client.on('message', async message => {
                 let solutionArray = puzzles[x].puzzle[2].split(" ")
                 solutionArray.shift()
                 let solutionString = []
-                // for (y = 0; y < puzzles[x].solutionMove; y++) {
-                //     solutionString.push(chess.move(solutionArray[y], {sloppy: true}).san)
-                //     chess.undo()
-                // }
+                for (y = 0; y < puzzles[x].solutionMove; y++) {
+                    solutionString.push(chess.move(solutionArray[y], {sloppy: true}).san)
+                    chess.undo()
+                }
                 
                 for (y = 0; y < puzzles[x].solutionMove - 1; y++) {
                     chess.move(solutionArray[y], {sloppy: true})
@@ -263,9 +263,6 @@ client.on('message', async message => {
                         message.channel.send("Correct! Opponent responded with " + chess.move(solutionArray[(puzzles[x].solutionMove)+1], {sloppy: true}).san + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     }
-
-
-                    
                 } else {
                     if (solutionString.length != 0) {
                         solutionString = solutionString.join(" ")
