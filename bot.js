@@ -238,9 +238,9 @@ client.on('message', async message => {
                 message.channel.send(typeof yourMove)
                 message.channel.send(typeof move)
 
-                message.channel.send(move)
+                message.channel.send(solutionArray.join(" "))
 
-                if (typeof yourMove == "null" || typeof yourMove == "undefined") {
+                if (yourMove == null || typeof move == "undefined") {
                     yourMove = "Invalid move"
                 } else {
                     yourMove = yourMove.san
