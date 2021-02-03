@@ -228,10 +228,10 @@ client.on('message', async message => {
                 message.channel.send(chess.fen())
 
                 chess.undo()
-                if (yourMove === null || typeof yourMove !== "string") {
-                    yourMove = "Invalid move"
-                } else {
+                if (typeof yourMove == "object" && yourMove !== null) {
                     yourMove = yourMove.san
+                } else {
+                    yourMove = "Invalid move"
                 }
                 message.channel.send(nextMove)
                 message.channel.send(yourMove)
