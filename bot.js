@@ -244,7 +244,7 @@ client.on('message', async message => {
                     solutionString.push(nextMove)
                     solutionString = solutionString.join(" ")
                     message.channel.send(solutionString)
-                    if (solutionArray.length - 1 == puzzles[x].solutionMove) {
+                    if (solutionArray.length - 2 == puzzles[x].solutionMove) {
                         message.channel.send(nextMove + ": correct! That's the end of the puzzle.")
                         puzzles = puzzles.splice(x, 1)
                     } else {
