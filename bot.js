@@ -23,8 +23,8 @@ client.on('ready', () => {
     bot.user.setPresence({
         status: 'online',
         activity: {
-            name: 'with depression',
-            type: 'STREAMING',
+            name: 'bc!puzzle',
+            type: 'PLAYING',
         }
     })
 });
