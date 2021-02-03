@@ -217,15 +217,11 @@ client.on('message', async message => {
                 solutionArray.shift()
                 let solutionString = []
                 
-                message.channel.send(chess.fen())
                 let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
-                message.channel.send(chess.fen())
 
                 chess.undo()
-                message.channel.send(chess.fen())
 
                 let yourMove = chess.move(move, {sloppy: true})
-                message.channel.send(chess.fen())
 
                 chess.undo()
                 if (typeof yourMove == "object" && yourMove !== null) {
@@ -233,14 +229,15 @@ client.on('message', async message => {
                 } else {
                     yourMove = "Invalid move"
                 }
-                message.channel.send(nextMove)
-                message.channel.send(yourMove)
-                message.channel.send(solutionArray[puzzles[x].solutionMove])
-                message.channel.send(puzzles[x].solutionMove)
+                message.channel.send(solutionArray.join(" "))
+                // message.channel.send(nextMove)
+                // message.channel.send(yourMove)
+                // message.channel.send(solutionArray[puzzles[x].solutionMove])
+                // message.channel.send(puzzles[x].solutionMove)
 
                 
                 for (y = 0; y < puzzles[x].solutionMove; y++) {
-                    solutionString.push(chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san)
+                    solutionString.push(chess.move(solutionArray[puzzles[x].y], {sloppy: true}).san)
                     chess.undo()
                 }
                 if (yourMove == nextMove) {
