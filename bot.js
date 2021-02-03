@@ -111,7 +111,7 @@ client.on('message', async message => {
                 } else {
                     player = "white"
                 }
-                message.channel.send(getJinChess(chess.fen, player, movesToVisualize))
+                message.channel.send(getJinChess(chess.fen(), player, movesToVisualize))
 
 
                 // message.channel.send(puzzle)
