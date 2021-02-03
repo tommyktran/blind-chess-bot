@@ -118,10 +118,11 @@ client.on('message', async message => {
                     .setFooter("(" + player + " to move)")
 
                 message.channel.send(embed)
-                message.channel.send("E")
 
 
-                // message.channel.send(puzzle)
+                message.channel.send(puzzle)
+                message.channel.send(moveNumber)
+                message.channel.send(movesBack)
                 // message.channel.send(movesToVisualize.join(" "))
                 // message.channel.send(chess.ascii())
                 // message.channel.send(moves)
