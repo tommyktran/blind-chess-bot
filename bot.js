@@ -53,6 +53,8 @@ client.on('message', async message => {
         message.channel.send("Hi")
     }
     if (command == "puzzle") {
+        let movesBack = 6
+        let movesToVisualize = []
         // Select a random puzzle from lichess_db_puzzle.csv
         let puzzle = data[getRandomInt(data.length)]
 
@@ -61,12 +63,33 @@ client.on('message', async message => {
         let gameId = puzzle[8].split("/")[3].split("#")[0]
         let moveNumber = puzzle[8].split("/")[3].split("#")[1]
 
+        moveNumber -= movesBack
+
         // message.channel.send(gameId[0])
 
         getLichessGamebyId(gameId).then(data => data.text())
             .then(result => {
-                message.channel.send("OK")
-                message.channel.send(result)
+                chess.load_pgn(result, {sloppy: true})
+                let moves = chess.history();
+                chess.reset();
+
+                for (let y = 0; y <= moveNumber + movesBack; y++) {
+                    chess.move(moves[y]);
+                    if (y <= moveNumber) {
+                        movesToVisualize.push(moves[y])
+                    }
+                }
+
+                chess.reset();
+
+                for (let y = 0; y <= moveNumber; y++) {
+                    chess.move(moves[y]);
+                }
+                // We are currently at the starting position of the blindfold tactic
+                // Now we need to look at the moves in the future.
+
+                message.channel.send(puzzle)
+                message.channel.send(movesToVisualize)
             })
 
     }
