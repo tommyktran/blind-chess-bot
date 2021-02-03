@@ -174,7 +174,7 @@ client.on('message', async message => {
                 let moves = chess.history();
                 chess.reset();
 
-                for (let y = 0; y < puzzles[x].moveNumber; y++) {
+                for (let y = 0; y < puzzles[x].moveNumber + puzzles[x].movesBack; y++) {
                     chess.move(moves[y]);
                 }
                 message.channel.send(puzzles[x].puzzle[2])
