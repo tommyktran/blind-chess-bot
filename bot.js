@@ -131,13 +131,14 @@ client.on('message', async message => {
                     .setDescription("Rating: **" + puzzle[3] + "**\n\nVisualize the moves below, then find the tactic that happens after.\n\n" + "**" + movesToVisualize.join(" ") + "**")
                     .setFooter("(" + player + " to move)")
 
+                //For answers. Stores puzzles in an array based on channels
                 let puzzleInChannel = false;
                 let puzzleMessageObject = {
-                    message1: message,
-                    puzzle1: puzzle
+                    message: message,
+                    puzzle: puzzle
                 }
                 for (x in puzzles) {
-                    if (puzzles[x].message1.channel == message.channel) {
+                    if (puzzles[x].message.channel == message.channel) {
                         puzzles[x] = puzzleMessageObject
                         puzzleInChannel = true
                     }
@@ -145,9 +146,6 @@ client.on('message', async message => {
                 if (puzzleInChannel == false) {
                     puzzles.push(puzzleMessageObject)
                 }
-
-                message.channel.send("```"+puzzles+"```")
-                message.channel.send(puzzles.length)
 
 
                 message.channel.send(embed)
@@ -163,6 +161,19 @@ client.on('message', async message => {
             })
 
     }
+    // if (command == "answer") {
+    //     let puzzleInChannel = false
+    //     for (x in puzzles) {
+    //         if (puzzles[x].message1.channel == message.channel) {
+    //             puzzleInChannel = true
+
+    //             puzzles[x].message
+    //         }
+    //     }
+    //     if (puzzleInChannel == false) {
+    //         message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
+    //     }
+    // }
 
 
     
