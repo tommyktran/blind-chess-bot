@@ -6,7 +6,7 @@ const prefix = "bc!"
 
 var fs = require('fs');
 
-const { Chess } = require('./chess.js')
+const { Chess } = require('chess.js')
 const chess = new Chess()
 
 var data = fs.readFileSync('lichess_db_puzzle.csv')
@@ -25,7 +25,9 @@ client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
-
+    if (command == "test") {
+        message.channel.send("Hi")
+    }
     if (command == "puzzle") {
         // Select a random puzzle from lichess_db_puzzle.csv
         let puzzle = data[getRandomInt(data.length)]
