@@ -218,11 +218,13 @@ client.on('message', async message => {
                 solutionArray.shift()
                 let solutionString = []
                 let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
+                let yourMove = chess.move(move, {sloppy: true}).san
                 for (y = 0; y < solutionArray[puzzles[x].solutionMove]; y++) {
                     solutionString.push(solutionArray[y])
+                    message.channel.send(solutionArray[y])
                 }
-                if (chess.move(move, {sloppy: true}).san == nextMove) {
-                    solutionString.push(solutionArray[puzzles[x].solutionMove+1])
+                if (yourMove == nextMove) {
+                    solutionString.push(solutionArray[(puzzles[x].solutionMove)+1])
                     solutionString = solutionString.join(" ")
                     message.channel.send(solutionString)
                     if (solutionArray.length - 1 == puzzles[x].solutionMove) {
@@ -236,7 +238,7 @@ client.on('message', async message => {
                 } else {
                     solutionString.join(" ")
                     message.channel.send(solutionString)
-                    message.channel.send(nextMove + ": incorrect. Try again.")
+                    message.channel.send("Incorrect. Try again.")
                 }
                 chess.reset()
             }
