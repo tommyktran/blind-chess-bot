@@ -217,6 +217,9 @@ client.on('message', async message => {
                 solutionArray.shift()
                 let solutionString = []
                 
+                for (y = 0; y <= puzzles[x].solutionMove; y++) {
+                    chess.move(solutionArray[y], {sloppy: true})
+                }
                 let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
 
                 chess.undo()
