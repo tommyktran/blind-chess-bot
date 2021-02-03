@@ -66,7 +66,11 @@ client.on('message', async message => {
         message.channel.send("Hi")
     }
     if (command == "puzzle") {
-        let movesBack = 6
+        let messageArray = message.content.split(" ");
+        let movesBack = 3
+        if (messageArray.length == 2 && typeof parseInt(messageArray[1]) == "int") {
+            movesBack = messageArray[1];
+        }
         let movesToVisualize = []
         // Select a random puzzle from lichess_db_puzzle.csv
         let puzzle = data[getRandomInt(data.length)]
@@ -82,7 +86,7 @@ client.on('message', async message => {
         let puzzleLink = "https://lichess.org/training/" + puzzle[0]
         let player
 
-        moveNumber -= movesBack
+        moveNumber -= movesBack * 2
 
         // message.channel.send(gameId[0])
 
@@ -112,7 +116,7 @@ client.on('message', async message => {
                 }
 
                 const embed = new Discord.MessageEmbed()
-                    .setTitle("Blind Tactic")
+                    .setTitle("Blind Tactic - Level " + movesBack)
                     .setImage(getJinChess(chess.fen(), player))
                     .setDescription("Visualize the moves below, then find the tactic that happens after.\n\n" + "**__" + movesToVisualize.join(" ") + "__**")
                     .setFooter("(" + player + " to move)")
