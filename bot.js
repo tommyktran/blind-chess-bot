@@ -217,9 +217,11 @@ client.on('message', async message => {
                 solutionArray.shift()
                 let solutionString = []
                 let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
-                let yourMove = chess.move(move, {sloppy: true}).san
+                let yourMove = chess.move(move, {sloppy: true})
                 if (yourMove === null || typeof yourMove !== "string") {
                     yourMove = "Invalid move"
+                } else {
+                    yourMove = yourMove.san
                 }
                 
                 for (y = 0; y < solutionArray[puzzles[x].solutionMove]; y++) {
