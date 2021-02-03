@@ -146,7 +146,6 @@ client.on('message', async message => {
                     puzzles.push(puzzleMessageObject)
                 }
 
-                message.channel.send(puzzles.toString())
                 message.channel.send("```"+puzzles+"```")
                 message.channel.send(puzzles.length)
 
