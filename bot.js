@@ -64,7 +64,7 @@ function getJinChess(fen, player) {
     return string
 }
 
-let puzzles = []
+let puzzles = ["HI"]
 
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
