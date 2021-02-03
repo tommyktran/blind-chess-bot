@@ -68,7 +68,7 @@ client.on('message', async message => {
     if (command == "puzzle") {
         let messageArray = message.content.split(" ");
         let level = 3
-        if (messageArray.length == 2 && typeof parseInt(messageArray[1]) == "int") {
+        if (messageArray.length == 2 && typeof parseInt(messageArray[1]) == "number") {
             level = messageArray[1];
         }
         let movesBack = level * 2
