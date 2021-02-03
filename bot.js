@@ -220,7 +220,8 @@ client.on('message', async message => {
 
                 // First we will navigate to the starting position of the tactic.
 
-                goToMove(moves, puzzles[x].moveNumber)
+                goToMove(moves, puzzles[x].moveNumber + 1)
+                message.channel.send(chess.fen())
 
                 // Convert the solutionArray to pgns.
                 let solutionArray = puzzles[x].puzzle[2].split(" ")
