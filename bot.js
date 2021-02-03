@@ -217,10 +217,10 @@ client.on('message', async message => {
                 let solutionArray = puzzles[x].puzzle[2].split(" ")
                 solutionArray.shift()
                 let solutionString = []
-                for (y = 0; y < puzzles[x].solutionMove; y++) {
-                    solutionString.push(chess.move(solutionArray[y], {sloppy: true}).san)
-                    chess.undo()
-                }
+                // for (y = 0; y < puzzles[x].solutionMove; y++) {
+                //     solutionString.push(chess.move(solutionArray[y], {sloppy: true}).san)
+                //     chess.undo()
+                // }
                 
                 for (y = 0; y < puzzles[x].solutionMove - 1; y++) {
                     chess.move(solutionArray[y], {sloppy: true})
