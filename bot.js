@@ -101,7 +101,7 @@ client.on('message', async message => {
 
                 chess.reset();
 
-                for (let y = 0; y <= moveNumber; y++) {
+                for (let y = 0; y < moveNumber; y++) {
                     chess.move(moves[y]);
                 }
                 
@@ -120,9 +120,9 @@ client.on('message', async message => {
                 message.channel.send(embed)
 
 
-                message.channel.send(puzzle)
-                message.channel.send(moveNumber)
-                message.channel.send(movesBack)
+                // message.channel.send(puzzle)
+                // message.channel.send(moveNumber)
+                // message.channel.send(movesBack)
                 // message.channel.send(movesToVisualize.join(" "))
                 // message.channel.send(chess.ascii())
                 // message.channel.send(moves)
