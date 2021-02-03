@@ -64,7 +64,7 @@ function getJinChess(fen, player) {
     return string
 }
 
-let puzzles = ["HI"]
+var puzzles = ["HI"]
 
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -133,11 +133,11 @@ client.on('message', async message => {
 
                 let puzzleInChannel = false;
                 let puzzleMessageObject = {
-                    message: message,
-                    puzzle: puzzle
+                    message1: message,
+                    puzzle1: puzzle
                 }
                 for (x in puzzles) {
-                    if (puzzles[x].message.channel == message.channel) {
+                    if (puzzles[x].message1.channel == message.channel) {
                         puzzles[x] = puzzleMessageObject
                         puzzleInChannel = true
                     }
