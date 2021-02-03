@@ -118,7 +118,8 @@ client.on('message', async message => {
                     .setDescription(movesToVisualize.join(" "))
                     .setFooter("(" + player + "to move)")
 
-                channel.send(embed)
+                message.channel.send(embed)
+                message.channel.send("E")
 
 
                 // message.channel.send(puzzle)
