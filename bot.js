@@ -55,7 +55,7 @@ function getJinChess(fen, player, moves) {
     URL += "&tt=" + player + " to Move"
     URL += "&ct=" + moves
     URL += "&ps=merida-flat&cm=o"
-    URL = encodeURI(URL)
+    URL = encodeURIComponent(URL)
     return URL
 }
 
