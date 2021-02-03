@@ -120,7 +120,7 @@ client.on('message', async message => {
                 message.channel.send(encodeURI("ero ero"))
 
 
-                message.channel.send(getJinChess(chess.fen(), player, movesToVisualize))
+                message.channel.send(getJinChess(chess.fen(), player, movesToVisualize.join(" ")))
                 
 
 
