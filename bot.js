@@ -251,6 +251,7 @@ client.on('message', async message => {
                         message.channel.send(nextMove + ": correct! That's the end of the puzzle.")
                         puzzles = puzzles.splice(x, 1)
                     } else {
+                        chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
                         message.channel.send(nextMove + ": correct! Opponent responded with " + chess.move(solutionArray[(puzzles[x].solutionMove)+1], {sloppy: true}).san + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     }
