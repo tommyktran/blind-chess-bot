@@ -22,9 +22,10 @@ client.on('ready', () => {
     console.log('I am ready!');
     bot.user.setPresence({
         status: 'online',
-        activity: {
+        game: {
             name: 'bc!puzzle',
-            type: 'PLAYING',
+            type: 'Playing',
+            url: "https://discordapp.com/"
         }
     })
 });
