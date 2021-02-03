@@ -60,6 +60,9 @@ client.on('message', async message => {
 
         //0       ,1  ,2    ,3     ,4              ,5         ,6      ,7     ,8
         //PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
+        if (puzzle[8].contains("/black")) {
+            puzzle[8] = puzzle[8].replace("/black", "")
+        }
         let gameId = puzzle[8].split("/")[3].split("#")[0]
         let moveNumber = puzzle[8].split("/")[3].split("#")[1]
 
@@ -75,7 +78,7 @@ client.on('message', async message => {
                 let moves = chess.history();
                 chess.reset();
 
-                for (let y = 0; y <= moveNumber + movesBack; y++) {
+                for (let y = 0; y < moveNumber + movesBack; y++) {
                     chess.move(moves[y]);
                     if (y >= moveNumber) {
                         movesToVisualize.push(moves[y])
