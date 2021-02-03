@@ -182,7 +182,9 @@ client.on('message', async message => {
                 let solutionArray = puzzles[x].puzzle[2].split(" ")
                 let solutionResult = []
                 for (x in solutionArray) {
-                    solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
+                    let thing = chess.move(solutionArray[x], {sloppy: true}).san
+                    solutionResult.push(thing)
+                    message.channel.send(thing)
                 }
                 message.channel.send(solutionResult.join(" "))
             }
