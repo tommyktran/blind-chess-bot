@@ -186,6 +186,8 @@ client.on('message', async message => {
                     solutionResult.push(thing)
                     message.channel.send(thing)
                 }
+                message.channel.send(solutionResult)
+                message.channel.send(solutionResult.toString())
                 message.channel.send(solutionResult.join(" "))
             }
         }
