@@ -57,7 +57,7 @@ function getJinChess(fen, player) {
     let URI = ""
     URI += fen
     URI += "&tm=" + player
-    URI += "&s=xl"
+    URI += "&s=l"
     URI += "&ps=merida-flat&cm=o"
     URI = encodeURI(URI)
     string += URI
@@ -218,6 +218,9 @@ client.on('message', async message => {
                 let solutionString = []
                 let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
                 let yourMove = chess.move(move, {sloppy: true}).san
+                if (yourMove === null || typeof yourMove !== "string") {
+                    yourMove = "Invalid move"
+                }
                 
                 for (y = 0; y < solutionArray[puzzles[x].solutionMove]; y++) {
                     solutionString.push(solutionArray[y])
@@ -229,7 +232,7 @@ client.on('message', async message => {
                     message.channel.send(solutionString)
                     if (solutionArray.length - 1 == puzzles[x].solutionMove) {
                         message.channel.send(nextMove + ": correct! That's the end of the puzzle.")
-                        puzzles.splice(x, 1)
+                        puzzles = puzzles.splice(x, 1)
                     } else {
                         message.channel.send(nextMove + ": correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove+1] + ". What's the next move?")
                         puzzles[x].solutionMove += 2
