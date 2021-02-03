@@ -254,6 +254,12 @@ client.on('message', async message => {
                         message.channel.send("Correct! Opponent responded with " + chess.move(solutionArray[(puzzles[x].solutionMove)+1], {sloppy: true}).san + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     }
+                    message.channel.send(solutionMove)
+                    message.channel.send(solutionArray.length)
+                    message.channel.send(solutionArray.length -2)
+                    message.channel.send(solutionArray[(puzzles[x].solutionMove)])
+
+
                     
                 } else {
                     if (solutionString.length != 0) {
