@@ -64,6 +64,8 @@ function getJinChess(fen, player) {
     return string
 }
 
+let puzzles = []
+
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -129,6 +131,23 @@ client.on('message', async message => {
                     .setDescription("Rating: **" + puzzle[3] + "**\n\nVisualize the moves below, then find the tactic that happens after.\n\n" + "**" + movesToVisualize.join(" ") + "**")
                     .setFooter("(" + player + " to move)")
 
+                let puzzleInChannel = false;
+                let puzzleMessageObject = {
+                    message: message,
+                    puzzle: puzzle
+                }
+                for (x in puzzles) {
+                    if (puzzles[x].message.channel == message.channel) {
+                        puzzles[x] = puzzleMessageObject
+                        puzzleInChannel = true
+                    }
+                }
+                if (puzzleInChannel == true) {
+                    puzzles.push(puzzleMessageObject)
+                }
+
+                message.channel.send(puzzles)
+                
                 message.channel.send(embed)
 
 
