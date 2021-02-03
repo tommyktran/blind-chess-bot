@@ -203,6 +203,7 @@ client.on('message', async message => {
         let puzzleInChannel = false
         for (x in puzzles) {
             if (puzzles[x].message.channel == message.channel) {
+
                 puzzleInChannel = true
                 chess.load_pgn(puzzles[x].pgn, {sloppy: true})
                 let moves = chess.history();
@@ -220,6 +221,8 @@ client.on('message', async message => {
                 for (y = 0; y < puzzles[x].solutionMove - 1; y++) {
                     chess.move(solutionArray[y], {sloppy: true})
                 }
+                message.channel.send(`\`\`\`${puzzles[x].solutionMove}\n${solutionArray.length}\n${solutionArray.length -2}\n${solutionArray[(puzzles[x].solutionMove)]}\`\`\``)
+
                 let nextMove = chess.move(solutionArray[puzzles[x].solutionMove], {sloppy: true}).san
 
                 chess.undo()
@@ -233,7 +236,6 @@ client.on('message', async message => {
                     yourMove = "Invalid move"
                 }
                 message.channel.send(solutionArray.join(" "))
-                message.channel.send(`\`\`\`\`${puzzles[x].solutionMove}\n${solutionArray.length}\n${message.channel.send(solutionArray.length -2)}\n${solutionArray[(puzzles[x].solutionMove)]}\`\`\``)
                 // message.channel.send(nextMove)
                 // message.channel.send(yourMove)
                 // message.channel.send(solutionArray[puzzles[x].solutionMove])
