@@ -223,6 +223,11 @@ client.on('message', async message => {
                 } else {
                     yourMove = yourMove.san
                 }
+                message.channel.send(nextMove)
+                message.channel.send(yourMove)
+                message.channel.send(solutionArray[puzzles[x].solutionMove])
+                message.channel.send(solutionMove)
+
                 
                 for (y = 0; y < solutionArray[puzzles[x].solutionMove]; y++) {
                     solutionString.push(solutionArray[y])
