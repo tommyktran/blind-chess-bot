@@ -89,7 +89,7 @@ client.on('message', async message => {
                 // Now we need to look at the moves in the future.
 
                 message.channel.send(puzzle)
-                message.channel.send(movesToVisualize)
+                message.channel.send(movesToVisualize.join(" "))
             })
 
     }
