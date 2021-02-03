@@ -86,6 +86,7 @@ client.on('message', async message => {
         } else if (messageArray.length == 2 && messageArray[1].split("-").length == 2) {
             rating = messageArray[2].split("-")
         }
+        message.channel.send(rating.join("-"))
         if (rating.isArray()) {
             for (x in rating) {
                 if (typeof parseInt(rating[x]) !== "number") {
@@ -93,12 +94,14 @@ client.on('message', async message => {
                 } 
             }
         }
+        message.channel.send(rating.join("-"))
+
         let movesBack = level * 2
         let movesToVisualize = []
         
         let puzzle
         // Select a random puzzle from lichess_db_puzzle.csv
-        if (rating != 0) {
+        if (rating == 0) {
             puzzle = data[getRandomInt(data.length)]
         } else {
             for (y = 0; y < 100; y ++) {
