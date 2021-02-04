@@ -205,7 +205,12 @@ client.on('message', async message => {
             }
         }
         if (puzzleInChannel == false) {
-            message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
+            const embed = new Discord.MessageEmbed()
+                .setTitle('Error')
+                .setDescription('There is no puzzle currently active. Start one with `bc!puzzle`.')
+            
+            message.channel.send(embed);
+            // message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
         }
     }
 
@@ -263,12 +268,26 @@ client.on('message', async message => {
 
                     if (puzzles[x].solutionMove !== solutionArray.length - 1) {
                         puzzles[x].currentSolution.push(solutionArray[puzzles[x].solutionMove + 1])
-                        message.channel.send("**" + puzzles[x].currentSolution.join(" ") + "**")
-                        message.channel.send("Correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove + 1] + ". What's the next move?")
+
+                        const embed = new Discord.MessageEmbed()
+                            .setTitle('Keep Going')
+                            .setDescription("**" + puzzles[x].currentSolution.join(" ") + "**\n\n" + "Correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove + 1] + ". What's the next move?")
+                        
+                        message.channel.send(embed);
+
+                        // message.channel.send("**" + puzzles[x].currentSolution.join(" ") + "**")
+                        // message.channel.send("Correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove + 1] + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     } else {
-                        message.channel.send("**" + puzzles[x].currentSolution.join(" ") + "**")
-                        message.channel.send("Correct! That's the end of the puzzle.")
+
+                        const embed = new Discord.MessageEmbed()
+                            .setTitle('Puzzle Complete')
+                            .setDescription("**" + puzzles[x].currentSolution.join(" ") + "**\n\n" + "Correct! That's the end of the puzzle.")
+                        
+                        message.channel.send(embed);
+
+                        // message.channel.send("**" + puzzles[x].currentSolution.join(" ") + "**")
+                        // message.channel.send("Correct! That's the end of the puzzle.")
                         // clearPuzzle(x)
                         // Below is copied from bc!solution.
                         // I don't understand why I can't clear a puzzle by simply using
@@ -298,7 +317,12 @@ client.on('message', async message => {
                                 chess.reset()
                     }
                 } else {
-                    message.channel.send("Incorrect. Try again.")
+                    const embed = new Discord.MessageEmbed()
+                        .setTitle('Wrong Move')
+                        .setDescription('Incorrect. Try again.')
+                    
+                    message.channel.send(embed);
+                    // message.channel.send("Incorrect. Try again.")
                 }
 
                 
