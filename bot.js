@@ -233,7 +233,7 @@ client.on('message', async message => {
 
                 chess.reset()
                 goToMove(moves, puzzles[x].moveNumber + puzzles[x].movesBack)
-                for (let y = 0; y < puzzles[x].solutionMove; y++) {
+                for (let y = 0; y <= puzzles[x].solutionMove; y++) {
                     message.channel.send(solutionArray[y])
                     goToMove(solutionArray[y])
                 }
