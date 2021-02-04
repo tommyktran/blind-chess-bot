@@ -145,7 +145,8 @@ client.on('message', async message => {
                     moveNumber: moveNumber,
                     movesBack: movesBack,
                     pgn: result,
-                    solutionMove: 0
+                    solutionMove: 0,
+                    currentSolution: []
                 }
                 for (x in puzzles) {
                     if (puzzles[x].message.channel == message.channel) {
@@ -247,11 +248,12 @@ client.on('message', async message => {
                 }
                 
                 if (yourMove == nextMove) {
-                    message.channel.send(yourMove)
-                    message.channel.send(nextMove)
-                    message.channel.send(puzzles[x].solutionMove)
-                    message.channel.send(solutionArray.length - 1)
-
+                    // message.channel.send(yourMove)
+                    // message.channel.send(nextMove)
+                    // message.channel.send(puzzles[x].solutionMove)
+                    // message.channel.send(solutionArray.length - 1)
+                    puzzles[x].currentSolution.push(nextMove)
+                    message.channel.send(currentSolution.join(" "))
 
 
                     if (puzzles[x].solutionMove !== solutionArray.length - 1) {
