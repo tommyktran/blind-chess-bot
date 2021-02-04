@@ -181,7 +181,7 @@ client.on('message', async message => {
                     .setTitle("Blind Tactic - Level " + level)
                     .setURL(puzzleLink)
                     .setImage(getJinChess(chess.fen(), player))
-                    .setDescription("Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after.\n\n" + "**" + movesToVisualize.join(" ") + "**")
+                    .setDescription("Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
                     .setFooter("(" + player + " to move)")
 
                 //For answers. Stores puzzles in an array based on channels
@@ -384,7 +384,16 @@ client.on('message', async message => {
         }
     }
 
-    
+    if (command == "help") {
+        const embed = new Discord.MessageEmbed()
+            .setTitle("Command List")
+            .addFields(
+                { name: 'bc!puzzle (level) (rating range)', value: 'Randomly generates a blind tactics puzzle. The level is how many moves you have to visualize (default is 3). Example: `bc!puzzle 1500-1600 3`' },
+                { name: 'bc!move (move)', value: 'Attempts an answer to the current puzzle. The move can be in standard algebraic notation (e4) or UCI format (e2e4).' },
+                { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it.'}
+            )
+                // { name: '', value: ''}
+    }
 })
  
 
