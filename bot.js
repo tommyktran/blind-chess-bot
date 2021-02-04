@@ -139,7 +139,7 @@ client.on('message', async message => {
                     .setTitle("Blind Tactic - Level " + level)
                     .setURL(puzzleLink)
                     .setImage(getJinChess(chess.fen(), player))
-                    .setDescription("Rating: **" + puzzle[3] + "**\n\nVisualize the moves below, then find the tactic that happens after.\n\n" + "**" + movesToVisualize.join(" ") + "**")
+                    .setDescription("Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after.\n\n" + "**" + movesToVisualize.join(" ") + "**")
                     .setFooter("(" + player + " to move)")
 
                 //For answers. Stores puzzles in an array based on channels
@@ -213,7 +213,6 @@ client.on('message', async message => {
         let messageArray = message.content.split(" ");
         let move = messageArray[1]
         let puzzleInChannel = false
-        let puzzle
 
         for (x in puzzles) {
             if (puzzles[x].message.channel == message.channel) {
