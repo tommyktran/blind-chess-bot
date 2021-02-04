@@ -264,11 +264,11 @@ client.on('message', async message => {
 
                     if (puzzles[x].solutionMove !== solutionArray.length - 1) {
                         puzzles[x].currentSolution.push(solutionArray[puzzles[x].solutionMove + 1])
-                        message.channel.send(puzzles[x].currentSolution.join(" "))
+                        message.channel.send("**" + puzzles[x].currentSolution.join(" ") + "**")
                         message.channel.send("Correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove + 1] + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     } else {
-                        message.channel.send(puzzles[x].currentSolution.join(" "))
+                        message.channel.send("**" + puzzles[x].currentSolution.join(" ") + "**")
                         message.channel.send("Correct! That's the end of the puzzle.")
                         // clearPuzzle(x)
                         // Below is copied from bc!solution.
@@ -310,7 +310,12 @@ client.on('message', async message => {
         }
 
         if (puzzleInChannel == false) {
-            message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
+            const embed = new Discord.MessageEmbed()
+                .setTitle('Error')
+                .setDescription('There is no puzzle currently active. Start one with `bc!puzzle`.')
+            
+            channel.send(exampleEmbed);
+            // message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
         }
 
 
