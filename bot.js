@@ -393,7 +393,6 @@ client.on('message', async message => {
                 { name: 'bc!move [move]', value: 'Attempts an answer to the current puzzle. The move can be in standard algebraic notation (Ke2) or UCI format (e1e2).' },
                 { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it.'}
             )
-            .setColor("#38a6a2")
                 // { name: '', value: ''}
 
         message.channel.send(embed)
