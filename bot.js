@@ -271,7 +271,11 @@ client.on('message', async message => {
                         message.channel.send(puzzles[x].currentSolution.join(" "))
                         message.channel.send("Correct! That's the end of the puzzle.")
                         // clearPuzzle(x)
-
+                        // Below is copied from bc!solution.
+                        // I don't understand why I can't clear a puzzle by simply using
+                        // puzzles = puzzles.splice(x, 1)
+                        // it works in bc!solution but it only works when I copy and paste it from there
+                        // I have no idea why.
                                 puzzleInChannel = true
                                 chess.load_pgn(puzzles[x].pgn, {sloppy: true})
                                 let moves = chess.history();
@@ -288,7 +292,7 @@ client.on('message', async message => {
                                 for (x in solutionArray) {
                                     solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
                                 }
-                                message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
+                                // message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
                 
                                 //Remove the puzzle from puzzles array
                                 puzzles = puzzles.splice(x, 1)
