@@ -259,13 +259,14 @@ client.on('message', async message => {
                     // message.channel.send(puzzles[x].solutionMove)
                     // message.channel.send(solutionArray.length - 1)
                     puzzles[x].currentSolution.push(nextMove)
-                    message.channel.send(puzzles[x].currentSolution.join(" "))
-
-
+                    
                     if (puzzles[x].solutionMove !== solutionArray.length - 1) {
+                        puzzles[x].currentSolution.push(solutionArray[puzzles[x].solutionMove + 1])
+                        message.channel.send(puzzles[x].currentSolution.join(" "))
                         message.channel.send("Correct! Opponent responded with " + solutionArray[puzzles[x].solutionMove + 1] + ". What's the next move?")
                         puzzles[x].solutionMove += 2
                     } else {
+                        message.channel.send(puzzles[x].currentSolution.join(" "))
                         message.channel.send("Correct! That's the end of the puzzle.")
                         puzzles = puzzles.splice(x, 1)
                     }
