@@ -115,6 +115,7 @@ client.on('message', async message => {
             let puzzleTemp = data[getRandomInt(data.length)]
             while (tries < 100) {
                 if (puzzleTemp[3] >= lowRating && puzzleTemp[3] <= highRating) {
+                    puzzleTemp = data[getRandomInt(data.length)]
                     puzzle = puzzleTemp
                     tries += 100
                 } else {
