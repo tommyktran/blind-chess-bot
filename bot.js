@@ -393,6 +393,8 @@ client.on('message', async message => {
                 { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it.'}
             )
                 // { name: '', value: ''}
+
+        message.channel.send(embed)
     }
 })
  
