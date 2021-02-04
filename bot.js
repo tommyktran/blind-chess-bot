@@ -227,12 +227,16 @@ client.on('message', async message => {
                 let solutionArray = puzzles[x].puzzle[2].split(" ")
                 solutionArray.shift()
                 
-                for (y = 0; y < solutionArray.length; y++) {
+                for (let y = 0; y < solutionArray.length; y++) {
                     solutionArray[y] = chess.move(solutionArray[y], {sloppy: true}).san
                 }
 
                 chess.reset()
-                goToMove(moves, puzzles[x].moveNumber + puzzles[x].movesBack + puzzles[x].solutionMove)
+                goToMove(moves, puzzles[x].moveNumber + puzzles[x].movesBack)
+                for (let y = 0; y < puzzles[x].solutionMove; y++) {
+                    message.channel.send(solutionArray[y])
+                    goToMove(solutionArray[y])
+                }
                 message.channel.send(chess.fen())
 
                 let nextMove = solutionArray[puzzles[x].solutionMove]
