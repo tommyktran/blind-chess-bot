@@ -340,22 +340,22 @@ client.on('message', async message => {
                         // puzzles = puzzles.splice(x, 1)
                         // it works in bc!solution but it only works when I copy and paste it from there
                         // I have no idea why.
-                                puzzleInChannel = true
-                                chess.load_pgn(puzzles[x].pgn, {sloppy: true})
-                                let moves = chess.history();
+                                // puzzleInChannel = true
+                                // chess.load_pgn(puzzles[x].pgn, {sloppy: true})
+                                // let moves = chess.history();
                 
-                                chess.reset();
+                                // chess.reset();
                 
-                                for (let y = 0; y < (puzzles[x].moveNumber + puzzles[x].movesBack); y++) {
-                                    chess.move(moves[y]);
-                                }
+                                // for (let y = 0; y < (puzzles[x].moveNumber + puzzles[x].movesBack); y++) {
+                                //     chess.move(moves[y]);
+                                // }
                 
-                                let solutionArray = puzzles[x].puzzle[2].split(" ")
-                                solutionArray.shift()
-                                let solutionResult = []
-                                for (x in solutionArray) {
-                                    solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
-                                }
+                                // let solutionArray = puzzles[x].puzzle[2].split(" ")
+                                // solutionArray.shift()
+                                // let solutionResult = []
+                                // for (x in solutionArray) {
+                                //     solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
+                                // }
                                 // message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
                 
                                 //Remove the puzzle from puzzles array
