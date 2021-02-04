@@ -313,7 +313,7 @@ client.on('message', async message => {
                 .setTitle('Error')
                 .setDescription('There is no puzzle currently active. Start one with `bc!puzzle`.')
             
-            channel.send(exampleEmbed);
+            message.channel.send(embed);
             // message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
         }
 
