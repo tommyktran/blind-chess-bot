@@ -253,7 +253,7 @@ client.on('message', async message => {
                     // message.channel.send(puzzles[x].solutionMove)
                     // message.channel.send(solutionArray.length - 1)
                     puzzles[x].currentSolution.push(nextMove)
-                    message.channel.send(currentSolution.join(" "))
+                    message.channel.send(puzzles[x].currentSolution.join(" "))
 
 
                     if (puzzles[x].solutionMove !== solutionArray.length - 1) {
