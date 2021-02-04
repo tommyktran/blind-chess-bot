@@ -71,7 +71,9 @@ function goToMove(moves, number) {
         chess.move(moves[y])
     }
 }
-
+function clearPuzzle(index) {
+    puzzles = puzzles.splice(index, 1)
+}
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -234,17 +236,14 @@ client.on('message', async message => {
                 chess.reset()
                 goToMove(moves, puzzles[x].moveNumber + puzzles[x].movesBack)
                 for (let y = 0; y <= puzzles[x].solutionMove; y++) {
-                    message.channel.send(solutionArray[y])
                     if (y !== puzzles[x].solutionMove) {
                         chess.move(solutionArray[y])
                     }
                 }
-                message.channel.send(chess.fen())
 
                 let nextMove = solutionArray[puzzles[x].solutionMove]
                 let yourMove = chess.move(move, {sloppy: true})
 
-                message.channel.send(solutionArray.join(" "))
 
                 if (yourMove == null || typeof move == "undefined") {
                     yourMove = "Invalid move"
@@ -259,7 +258,7 @@ client.on('message', async message => {
                     // message.channel.send(puzzles[x].solutionMove)
                     // message.channel.send(solutionArray.length - 1)
                     puzzles[x].currentSolution.push(nextMove)
-                    
+
                     if (puzzles[x].solutionMove !== solutionArray.length - 1) {
                         puzzles[x].currentSolution.push(solutionArray[puzzles[x].solutionMove + 1])
                         message.channel.send(puzzles[x].currentSolution.join(" "))
@@ -268,11 +267,9 @@ client.on('message', async message => {
                     } else {
                         message.channel.send(puzzles[x].currentSolution.join(" "))
                         message.channel.send("Correct! That's the end of the puzzle.")
-                        puzzles = puzzles.splice(x, 1)
+                        clearPuzzle(x)
                     }
                 } else {
-                    message.channel.send(yourMove)
-                    message.channel.send(nextMove)
                     message.channel.send("Incorrect. Try again.")
                 }
 
