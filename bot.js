@@ -270,7 +270,29 @@ client.on('message', async message => {
                     } else {
                         message.channel.send(puzzles[x].currentSolution.join(" "))
                         message.channel.send("Correct! That's the end of the puzzle.")
-                        clearPuzzle(x)
+                        // clearPuzzle(x)
+
+                                puzzleInChannel = true
+                                chess.load_pgn(puzzles[x].pgn, {sloppy: true})
+                                let moves = chess.history();
+                
+                                chess.reset();
+                
+                                for (let y = 0; y < (puzzles[x].moveNumber + puzzles[x].movesBack); y++) {
+                                    chess.move(moves[y]);
+                                }
+                
+                                let solutionArray = puzzles[x].puzzle[2].split(" ")
+                                solutionArray.shift()
+                                let solutionResult = []
+                                for (x in solutionArray) {
+                                    solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
+                                }
+                                message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
+                
+                                //Remove the puzzle from puzzles array
+                                puzzles = puzzles.splice(x, 1)
+                                chess.reset()
                     }
                 } else {
                     message.channel.send("Incorrect. Try again.")
