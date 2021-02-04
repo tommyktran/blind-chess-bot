@@ -239,10 +239,14 @@ client.on('message', async message => {
                 for (x in solutionArray) {
                     solutionResult.push(chess.move(solutionArray[x], {sloppy: true}).san)
                 }
-                message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
+                // message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
 
+                const embed = new Discord.MessageEmbed()
+                    .setTitle('Solution')
+                    .setDescription("||" + solutionResult.join(" ") + "||")
+                message.channel.send(embed)
                 //Remove the puzzle from puzzles array
-                puzzles = puzzles.splice(x, 1)
+                puzzles.splice(x, 1)
                 chess.reset()
             }
         }
@@ -355,7 +359,7 @@ client.on('message', async message => {
                                 // message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
                 
                                 //Remove the puzzle from puzzles array
-                                puzzles = puzzles.splice(x, 1)
+                                puzzles.splice(x, 1)
                                 chess.reset()
                     }
                 } else {
