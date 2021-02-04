@@ -114,10 +114,10 @@ client.on('message', async message => {
             let tries = 0
             let puzzleTemp = data[getRandomInt(data.length)]
             while (tries < 100) {
+                puzzleTemp = data[getRandomInt(data.length)]
                 if (puzzleTemp[3] >= lowRating && puzzleTemp[3] <= highRating) {
-                    puzzleTemp = data[getRandomInt(data.length)]
                     puzzle = puzzleTemp
-                    tries += 100
+                    tries += 101
                 } else {
                     tries ++
                     if (tries == 100) {
