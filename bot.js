@@ -72,7 +72,10 @@ function goToMove(moves, number) {
     }
 }
 function clearPuzzle(index) {
+    message.channel.send(index)
+    message.channel.send(puzzles.length)
     puzzles = puzzles.splice(index, 1)
+    chess.reset()
 }
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
