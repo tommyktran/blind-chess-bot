@@ -388,10 +388,13 @@ client.on('message', async message => {
         const embed = new Discord.MessageEmbed()
             .setTitle("Command List")
             .addFields(
-                { name: 'bc!puzzle (level) (rating range)', value: 'Randomly generates a blind tactics puzzle. The level is how many moves you have to visualize (default is 3). Example: `bc!puzzle 1500-1600 3`' },
-                { name: 'bc!move (move)', value: 'Attempts an answer to the current puzzle. The move can be in standard algebraic notation (e4) or UCI format (e2e4).' },
-                { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it.'}
+                { name: 'bc!help', value: 'Displays this menu.'},
+                { name: 'bc!puzzle [rating range] [level]', value: 'Randomly generates a blind tactics puzzle. The level is how many moves you have to visualize (default is 3). Example: `bc!puzzle 1500-1600 3`' },
+                { name: 'bc!move [move]', value: 'Attempts an answer to the current puzzle. The move can be in standard algebraic notation (Ke2) or UCI format (e1e2).' },
+                { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it.'},
+                { name: 'bc!test', value: 'It just says "Hi". Use it to test if the bot is online.'}
             )
+            .setColor("#52DEAD")
                 // { name: '', value: ''}
 
         message.channel.send(embed)
