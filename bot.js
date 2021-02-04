@@ -98,9 +98,16 @@ client.on('message', async message => {
                     highRating = parseInt(messageArray[1].split("-")[1])
                 }
             } else if (messageArray.length == 3) {
-                lowRating = parseInt(messageArray[1].split("-")[0])
-                highRating = parseInt(messageArray[1].split("-")[1])
-                level = parseInt(messageArray[2]);
+                if (!(isNaN(messageArray[2])) && !(messageArray[2].includes("-"))) {
+                    lowRating = parseInt(messageArray[1].split("-")[0])
+                    highRating = parseInt(messageArray[1].split("-")[1])
+                    level = parseInt(messageArray[2]);
+                } else {
+                    lowRating = parseInt(messageArray[2].split("-")[0])
+                    highRating = parseInt(messageArray[2].split("-")[1])
+                    level = parseInt(messageArray[1]);
+                }
+                
             }
         }
         
