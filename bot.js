@@ -608,7 +608,7 @@ client.on('message', async message => {
             challenges.push(challengeObject)
         }
 
-        newPuzzle(challengeLevel, challengeRatingRange[0], challengeRatingRange[1])
+        newPuzzle(challengeObject.challengeLevel, challengeObject.challengeRatingRange[0], challengeObject.challengeRatingRange[1])
     }
 
     if (command == "help") {
