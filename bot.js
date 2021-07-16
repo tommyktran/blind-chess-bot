@@ -532,7 +532,7 @@ client.on('message', async message => {
                                 if (currentChallenge.challengeIncorrect) {
                                     embed.setTitle('Challenge Ended')
                                     embed.setDescription("**" + puzzles[x].currentSolution.join(" ") + "**\n" + "Correct! That's the end of the puzzle." +
-                                    "\nYour challenge has ended.\nRating range: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[0] +
+                                    "\nYour challenge has ended.\nRating range: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[1] +
                                     "\nVisualization level: " + (currentChallenge.challengeLevel - 1))
 
                                     challenges.splice(challenges.indexOf(currentChallenge), 1)
