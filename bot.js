@@ -572,7 +572,6 @@ client.on('message', async message => {
         // you get it right on the first try. 
 
         let messageArray = message.content.split(" ");
-        challengeLevel = 3;
         let challengeRatingRange = [];
         let challengeLevel = 3;
         let challengeIncorrect = false;
