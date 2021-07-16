@@ -2,11 +2,9 @@ const Discord = require('discord.js');
 
 const client = new Discord.Client();
 
-const prefix = "bc!"
-
 var fs = require('fs');
 
-const { Chess } = require('chess.js')
+const { Chess } = require('chess.js');
 const fetch = require('node-fetch');
 const { url } = require('inspector');
 
@@ -77,8 +75,11 @@ function goToMove(moves, number) {
 //     puzzles = puzzles.splice(index, 1)
 //     chess.reset()
 // }
+
+const prefix = "bc!";
+
 client.on('message', async message => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	if (!message.content.toLowerCase.startsWith(prefix.toLowerCase) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
     if (command == "test") {
