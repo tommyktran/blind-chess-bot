@@ -504,7 +504,7 @@ client.on('message', async message => {
                     chess.undo()
                 }
                 
-                if (yourMove == nextMove) {
+                if (yourMove.toLowerCase() == nextMove.toLowerCase()) {
                     // message.channel.send(yourMove)
                     // message.channel.send(nextMove)
                     // message.channel.send(puzzles[x].solutionMove)
