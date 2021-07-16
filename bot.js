@@ -181,7 +181,7 @@ client.on('message', async message => {
 
                 if (challengeInChannel) {
                     embed.setTitle("Blind Challenge - Level " + level)
-                    embed.setDescription("Challenge Rating: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[1] + "Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
+                    embed.setDescription("Challenge Rating: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[1] + "\nRating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
 
                 }
     
@@ -630,7 +630,8 @@ client.on('message', async message => {
 
         const embed = new Discord.MessageEmbed()
             .setTitle("New Challenge")
-            .setDescription("You're starting a new challenge at rating range **" + challengeObject.challengeRatingRange[0] + "-" + challengeObject.challengeRatingRange[1] + "**. Starting at visualization level 3, solve puzzles and increase the level by 1 each time you get the puzzles correct.")
+            .setDescription("You're starting a new challenge at rating range **" + challengeObject.challengeRatingRange[0] + "-" + challengeObject.challengeRatingRange[1] + "**! Starting at visualization level 3, solve puzzles and increase the level by 1 each time you get the puzzles correct.")
+        message.channel.send(embed)
 
         newPuzzle(challengeObject.challengeLevel, challengeObject.challengeRatingRange[0], challengeObject.challengeRatingRange[1])
     }
