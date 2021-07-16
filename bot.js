@@ -95,12 +95,14 @@ client.on('message', async message => {
 	// if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
     if (message.author.bot) {
         return
-    } else if (message.content.toLowerCase().startsWith(prefixes[0].toLowerCase())) {
-        prefixUsed = prefixes[0];
-    } else if (message.content.toLowerCase().startsWith(prefixes[1].toLowerCase())) {
-        prefixUsed = prefixes[1];
     } else if (message.content.toLowerCase().startsWith(prefixes[2].toLowerCase())) {
         prefixUsed = prefixes[2];
+    } else if (message.content.toLowerCase().startsWith(prefixes[1].toLowerCase())) {
+        prefixUsed = prefixes[1];
+    } else if (message.content.toLowerCase().startsWith(prefixes[0].toLowerCase())) {
+        prefixUsed = prefixes[0];
+    } else {
+        return
     }
     
 	const args = message.content.slice(prefixUsed.length).trim().split(/ +/);
