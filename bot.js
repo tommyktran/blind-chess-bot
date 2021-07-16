@@ -79,7 +79,7 @@ function goToMove(moves, number) {
 const prefix = "bc!";
 
 client.on('message', async message => {
-	if (!message.content.toLowerCase.startsWith(prefix.toLowerCase) || message.author.bot) return;
+	if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
     if (command == "test") {
