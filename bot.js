@@ -253,11 +253,21 @@ client.on('message', async message => {
         }
         
         // if you use bc!puzzle with a challenge, it will remove the challenge
-        for (x in challenges) {
-            if (challenges[x].message.channel == message.channel) {
-                challenges.splice(x, 1)
-            }
+        let challengeInChannel = false
+                let currentChallenge
+                for (x in challenges) {
+                    if (challenges[x].message.channel == message.channel) {
+                        challengeInChannel = true
+                        challenges.splice(x, 1)
+                    }
+                }
+        if (challengeInChannel) {
+            let embed1 = new Discord.MessageEmbed()
+            embed1.setTitle('Challenge Ended')
+            embed1.setDescription("||" + "\nYour challenge has ended.\nRating range: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[1] + "\nVisualization level: " + (currentChallenge.challengeLevel-1))
+            message.channel.send(embed1)
         }
+
 
         let movesBack = level * 2
         let movesToVisualize = []
