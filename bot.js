@@ -88,7 +88,7 @@ var challenges = [];
 
 
 
-const prefix = "bc!";
+const prefix = "bc";
 
 client.on('message', async message => {
 	if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
