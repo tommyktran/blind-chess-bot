@@ -391,8 +391,9 @@ client.on('message', async message => {
 
                 if (challengeInChannel) {
                     embed.setTitle('Challenge Ended')
-                    embed.setDescription("||" + solutionResult.join(" ") + "||" + "\nYour challenge has ended.\nRating range: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[0] +
-                    "\nVisualization level: " + currentChallenge.challengeLevel - 1)
+                    // embed.setDescription("||" + solutionResult.join(" ") + "||" + "\nYour challenge has ended.\nRating range: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[0] +
+                    // "\nVisualization level: " + currentChallenge.challengeLevel - 1)
+                    embed.setDescription("elregmlrkgje");
 
                     challenges.splice(challenges.indexOf(currentChallenge), 1)
                 }
