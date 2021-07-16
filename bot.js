@@ -84,117 +84,7 @@ var challenges = [];
 //     chess.reset()
 // }
 
-function newPuzzle(level, lowRating, highRating) {
-        
-    let movesBack = level * 2
-    let movesToVisualize = []
-    // Select a random puzzle from lichess_db_puzzle.csv
-    // let puzzle = data[getRandomInt(data.length)]
-    let puzzle
 
-    if (lowRating < highRating) {
-        let tries = 0
-        let puzzleTemp = data[getRandomInt(data.length)]
-        while (tries < 100) {
-            puzzleTemp = data[getRandomInt(data.length)]
-            if (puzzleTemp[3] >= lowRating && puzzleTemp[3] <= highRating) {
-                puzzle = puzzleTemp
-                tries += 101
-            } else {
-                tries ++
-                if (tries == 100) {
-                    message.channel.send("Puzzle not found in rating range")
-                    puzzle = data[getRandomInt(data.length)]
-                }
-            }
-        }
-    } else {
-        puzzle = data[getRandomInt(data.length)]
-    }
-
-    //0       ,1  ,2    ,3     ,4              ,5         ,6      ,7     ,8
-    //PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
-    if (puzzle[8].includes("/black")) {
-        puzzle[8] = puzzle[8].replace("/black", "")
-    }
-    let gameId = puzzle[8].split("/")[3].split("#")[0]
-    let moveNumber = puzzle[8].split("/")[3].split("#")[1]
-
-    let puzzleLink = "https://lichess.org/training/" + puzzle[0]
-    let player
-
-    moveNumber -= movesBack
-
-    // message.channel.send(gameId[0])
-
-    getLichessGamebyId(gameId).then(data => data.text())
-        .then(result => {
-            chess.load_pgn(result, {sloppy: true})
-            let moves = chess.history();
-            chess.reset();
-
-            for (let y = 0; y < moveNumber + movesBack; y++) {
-                chess.move(moves[y]);
-                if (y >= moveNumber) {
-                    movesToVisualize.push(moves[y])
-                }
-            }
-
-            chess.reset();
-
-            for (let y = 0; y < moveNumber; y++) {
-                chess.move(moves[y]);
-            }
-            
-            if (chess.turn() == "b") {
-                player = "Black"
-            } else {
-                player = "White"
-            }
-
-            const embed = new Discord.MessageEmbed()
-                .setTitle("Blind Tactic - Level " + level)
-                .setURL(puzzleLink)
-                .setImage(getJinChess(chess.fen(), player))
-                .setDescription("Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
-                .setFooter("(" + player + " to move)")
-
-            //For answers. Stores puzzles in an array based on channels
-            let puzzleInChannel = false;
-            let puzzleMessageObject = {
-                message: message,
-                puzzle: puzzle,
-                moveNumber: moveNumber,
-                movesBack: movesBack,
-                pgn: result,
-                solutionMove: 0,
-                currentSolution: []
-            }
-            for (x in puzzles) {
-                if (puzzles[x].message.channel == message.channel) {
-                    puzzles[x] = puzzleMessageObject
-                    puzzleInChannel = true
-                }
-            }
-            if (puzzleInChannel == false) {
-                puzzles.push(puzzleMessageObject)
-            }
-
-
-            message.channel.send(embed)
-            chess.reset()
-
-            // message.channel.send(puzzle)
-            // message.channel.send(moveNumber)
-            // message.channel.send(movesBack)
-            // message.channel.send(movesToVisualize.join(" "))
-            // message.channel.send(chess.ascii())
-            // message.channel.send(moves)
-
-        })
-
-
-}
 
 
 
@@ -568,6 +458,117 @@ client.on('message', async message => {
     }
 
     if (command == "challenge") {
+        function newPuzzle(level, lowRating, highRating) {
+        
+            let movesBack = level * 2
+            let movesToVisualize = []
+            // Select a random puzzle from lichess_db_puzzle.csv
+            // let puzzle = data[getRandomInt(data.length)]
+            let puzzle
+        
+            if (lowRating < highRating) {
+                let tries = 0
+                let puzzleTemp = data[getRandomInt(data.length)]
+                while (tries < 100) {
+                    puzzleTemp = data[getRandomInt(data.length)]
+                    if (puzzleTemp[3] >= lowRating && puzzleTemp[3] <= highRating) {
+                        puzzle = puzzleTemp
+                        tries += 101
+                    } else {
+                        tries ++
+                        if (tries == 100) {
+                            message.channel.send("Puzzle not found in rating range")
+                            puzzle = data[getRandomInt(data.length)]
+                        }
+                    }
+                }
+            } else {
+                puzzle = data[getRandomInt(data.length)]
+            }
+        
+            //0       ,1  ,2    ,3     ,4              ,5         ,6      ,7     ,8
+            //PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
+            if (puzzle[8].includes("/black")) {
+                puzzle[8] = puzzle[8].replace("/black", "")
+            }
+            let gameId = puzzle[8].split("/")[3].split("#")[0]
+            let moveNumber = puzzle[8].split("/")[3].split("#")[1]
+        
+            let puzzleLink = "https://lichess.org/training/" + puzzle[0]
+            let player
+        
+            moveNumber -= movesBack
+        
+            // message.channel.send(gameId[0])
+        
+            getLichessGamebyId(gameId).then(data => data.text())
+                .then(result => {
+                    chess.load_pgn(result, {sloppy: true})
+                    let moves = chess.history();
+                    chess.reset();
+        
+                    for (let y = 0; y < moveNumber + movesBack; y++) {
+                        chess.move(moves[y]);
+                        if (y >= moveNumber) {
+                            movesToVisualize.push(moves[y])
+                        }
+                    }
+        
+                    chess.reset();
+        
+                    for (let y = 0; y < moveNumber; y++) {
+                        chess.move(moves[y]);
+                    }
+                    
+                    if (chess.turn() == "b") {
+                        player = "Black"
+                    } else {
+                        player = "White"
+                    }
+        
+                    const embed = new Discord.MessageEmbed()
+                        .setTitle("Blind Tactic - Level " + level)
+                        .setURL(puzzleLink)
+                        .setImage(getJinChess(chess.fen(), player))
+                        .setDescription("Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
+                        .setFooter("(" + player + " to move)")
+        
+                    //For answers. Stores puzzles in an array based on channels
+                    let puzzleInChannel = false;
+                    let puzzleMessageObject = {
+                        message: message,
+                        puzzle: puzzle,
+                        moveNumber: moveNumber,
+                        movesBack: movesBack,
+                        pgn: result,
+                        solutionMove: 0,
+                        currentSolution: []
+                    }
+                    for (x in puzzles) {
+                        if (puzzles[x].message.channel == message.channel) {
+                            puzzles[x] = puzzleMessageObject
+                            puzzleInChannel = true
+                        }
+                    }
+                    if (puzzleInChannel == false) {
+                        puzzles.push(puzzleMessageObject)
+                    }
+        
+        
+                    message.channel.send(embed)
+                    chess.reset()
+        
+                    // message.channel.send(puzzle)
+                    // message.channel.send(moveNumber)
+                    // message.channel.send(movesBack)
+                    // message.channel.send(movesToVisualize.join(" "))
+                    // message.channel.send(chess.ascii())
+                    // message.channel.send(moves)
+        
+                })
+        
+        
+        }
         // start a puzzle challenge. Do blind puzzles at a specified rating range, starting from level 3 and going up each time
         // you get it right on the first try. 
 
