@@ -498,7 +498,13 @@ client.on('message', async message => {
 
 
                 if (yourMove == null || typeof move == "undefined") {
-                    yourMove = "Invalid move"
+                    yourMove = chess.move(move.charAt(0).toUpperCase() + move.slice(1), {sloppy: true})
+                    if (yourMove == null || typeof move == "undefined") {
+                        yourMove = "Invalid move"
+                    } else {
+                        yourMove = yourMove.san
+                        chess.undo()
+                    }
                 } else {
                     yourMove = yourMove.san
                     chess.undo()
