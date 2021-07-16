@@ -62,19 +62,141 @@ function getJinChess(fen, player) {
     return string
 }
 
-var puzzles = []
+var puzzles = [];
 
 function goToMove(moves, number) {
     for (y = 0; y < number; y++) {
         chess.move(moves[y])
     }
-}
+};
+
+// var challengeRatingRange = [];
+// var challengeLevel = 3;
+// var challengeIncorrect = false;
+// var challengeOngoing = false;
+
+var challenges = [];
+
 // function clearPuzzle(index) {
 //     message.channel.send(index)
 //     message.channel.send(puzzles.length)
 //     puzzles = puzzles.splice(index, 1)
 //     chess.reset()
 // }
+
+function newPuzzle(level, lowRating, highRating) {
+        
+    let movesBack = level * 2
+    let movesToVisualize = []
+    // Select a random puzzle from lichess_db_puzzle.csv
+    // let puzzle = data[getRandomInt(data.length)]
+    let puzzle
+
+    if (lowRating < highRating) {
+        let tries = 0
+        let puzzleTemp = data[getRandomInt(data.length)]
+        while (tries < 100) {
+            puzzleTemp = data[getRandomInt(data.length)]
+            if (puzzleTemp[3] >= lowRating && puzzleTemp[3] <= highRating) {
+                puzzle = puzzleTemp
+                tries += 101
+            } else {
+                tries ++
+                if (tries == 100) {
+                    message.channel.send("Puzzle not found in rating range")
+                    puzzle = data[getRandomInt(data.length)]
+                }
+            }
+        }
+    } else {
+        puzzle = data[getRandomInt(data.length)]
+    }
+
+    //0       ,1  ,2    ,3     ,4              ,5         ,6      ,7     ,8
+    //PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
+    if (puzzle[8].includes("/black")) {
+        puzzle[8] = puzzle[8].replace("/black", "")
+    }
+    let gameId = puzzle[8].split("/")[3].split("#")[0]
+    let moveNumber = puzzle[8].split("/")[3].split("#")[1]
+
+    let puzzleLink = "https://lichess.org/training/" + puzzle[0]
+    let player
+
+    moveNumber -= movesBack
+
+    // message.channel.send(gameId[0])
+
+    getLichessGamebyId(gameId).then(data => data.text())
+        .then(result => {
+            chess.load_pgn(result, {sloppy: true})
+            let moves = chess.history();
+            chess.reset();
+
+            for (let y = 0; y < moveNumber + movesBack; y++) {
+                chess.move(moves[y]);
+                if (y >= moveNumber) {
+                    movesToVisualize.push(moves[y])
+                }
+            }
+
+            chess.reset();
+
+            for (let y = 0; y < moveNumber; y++) {
+                chess.move(moves[y]);
+            }
+            
+            if (chess.turn() == "b") {
+                player = "Black"
+            } else {
+                player = "White"
+            }
+
+            const embed = new Discord.MessageEmbed()
+                .setTitle("Blind Tactic - Level " + level)
+                .setURL(puzzleLink)
+                .setImage(getJinChess(chess.fen(), player))
+                .setDescription("Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
+                .setFooter("(" + player + " to move)")
+
+            //For answers. Stores puzzles in an array based on channels
+            let puzzleInChannel = false;
+            let puzzleMessageObject = {
+                message: message,
+                puzzle: puzzle,
+                moveNumber: moveNumber,
+                movesBack: movesBack,
+                pgn: result,
+                solutionMove: 0,
+                currentSolution: []
+            }
+            for (x in puzzles) {
+                if (puzzles[x].message.channel == message.channel) {
+                    puzzles[x] = puzzleMessageObject
+                    puzzleInChannel = true
+                }
+            }
+            if (puzzleInChannel == false) {
+                puzzles.push(puzzleMessageObject)
+            }
+
+
+            message.channel.send(embed)
+            chess.reset()
+
+            // message.channel.send(puzzle)
+            // message.channel.send(moveNumber)
+            // message.channel.send(movesBack)
+            // message.channel.send(movesToVisualize.join(" "))
+            // message.channel.send(chess.ascii())
+            // message.channel.send(moves)
+
+        })
+
+
+}
+
+
 
 const prefix = "bc!";
 
@@ -112,6 +234,13 @@ client.on('message', async message => {
             }
         }
         
+        // if you use bc!puzzle with a challenge, it will remove the challenge
+        for (x in challenges) {
+            if (challenges[x].message.channel == message.channel) {
+                challenges.splice(x, 1)
+            }
+        }
+
         let movesBack = level * 2
         let movesToVisualize = []
         // Select a random puzzle from lichess_db_puzzle.csv
@@ -222,6 +351,8 @@ client.on('message', async message => {
     }
     if (command == "solution") {
         let puzzleInChannel = false
+
+        
         for (x in puzzles) {
             if (puzzles[x].message.channel == message.channel) {
                 puzzleInChannel = true
@@ -242,9 +373,27 @@ client.on('message', async message => {
                 }
                 // message.channel.send("Solution: ||" + solutionResult.join(" ") + "||")
 
+
+                let challengeInChannel = false
+                let currentChallenge
+                for (x in challenges) {
+                    if (challenges[x].message.channel == message.channel) {
+                        challengeInChannel = true
+                        currentChallenge = challenges[x]
+                    }
+                }
                 const embed = new Discord.MessageEmbed()
                     .setTitle('Solution')
                     .setDescription("||" + solutionResult.join(" ") + "||")
+
+                if (challengeInChannel) {
+                    embed.setTitle('Challenge Ended')
+                    .setDescription("||" + solutionResult.join(" ") + "||" + "\nYour challenge has ended.\nRating range: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[0] +
+                    "\nVisualization level: " + currentChallenge.challengeLevel - 1)
+
+                    challenges.splice(challenges.indexOf(currentChallenge), 1)
+                }
+
                 message.channel.send(embed)
                 //Remove the puzzle from puzzles array
                 puzzles.splice(x, 1)
@@ -265,6 +414,15 @@ client.on('message', async message => {
         let messageArray = message.content.split(" ");
         let move = messageArray[1]
         let puzzleInChannel = false
+
+        let challengeInChannel = false
+        let currentChallenge
+        for (x in challenges) {
+            if (challenges[x].message.channel == message.channel) {
+                challengeInChannel = true
+                currentChallenge = challenges[x]
+            }
+        }
 
         for (x in puzzles) {
             if (puzzles[x].message.channel == message.channel) {
@@ -331,7 +489,23 @@ client.on('message', async message => {
                             .setTitle('Puzzle Complete')
                             .setDescription("**" + puzzles[x].currentSolution.join(" ") + "**\n" + "Correct! That's the end of the puzzle.")
                         
+                            if (challengeInChannel) {
+                                if (currentChallenge.challengeIncorrect) {
+                                    embed.setTitle('Challenge Ended')
+                                    embed.setDescription("**" + puzzles[x].currentSolution.join(" ") + "**\n" + "Correct! That's the end of the puzzle." +
+                                    "\nYour challenge has ended.\nRating range: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[0] +
+                                    "\nVisualization level: " + currentChallenge.challengeLevel - 1)
+
+                                    challenges.splice(challenges.indexOf(currentChallenge), 1)
+                                } else {
+                                    embed.setTitle('Challenge Ongoing')
+                                    currentChallenge.challengeLevel++
+                                    newPuzzle(currentChallenge.challengeLevel, currentChallenge.challengeRatingRange[0], currentChallenge.challengeRatingRange[1])
+                                }
+                            }
                         message.channel.send(embed);
+
+                        
 
                         // message.channel.send("**" + puzzles[x].currentSolution.join(" ") + "**")
                         // message.channel.send("Correct! That's the end of the puzzle.")
@@ -368,6 +542,10 @@ client.on('message', async message => {
                         .setTitle('Wrong Move')
                         .setDescription('Incorrect. Try again.')
                     
+                    if (challengeInChannel) {
+                        currentChallenge.challengeIncorrect = true
+                        embed.setTitle('Challenge Failed')
+                    }
                     message.channel.send(embed);
                     // message.channel.send("Incorrect. Try again.")
                 }
@@ -387,6 +565,51 @@ client.on('message', async message => {
             message.channel.send(embed);
             // message.channel.send("There is no puzzle currently active. Start one with `bc!puzzle`.")
         }
+    }
+
+    if (command == "challenge") {
+        // start a puzzle challenge. Do blind puzzles at a specified rating range, starting from level 3 and going up each time
+        // you get it right on the first try. 
+
+        let messageArray = message.content.split(" ");
+        challengeLevel = 3;
+        let challengeRatingRange = [];
+        let challengeLevel = 3;
+        let challengeIncorrect = false;
+
+        // let lowRating
+        // let highRating
+        if (messageArray.length == 2 && messageArray[1].includes("-")) {
+            if (!(isNaN(parseInt(messageArray[1].split("-")[0])) && !(isNaN(parseInt(messageArray[1].split("-")[1]))) && messageArray[1].split("-").length == 2)) {
+                challengeRatingRange[0] = parseInt(messageArray[1].split("-")[0])
+                challengeRatingRange[1] = parseInt(messageArray[1].split("-")[1])
+            }
+        } else if (messageArray.length == 1) {
+            challengeRatingRange[0] = 2000
+            challengeRatingRange[1] = 2200
+        } else {
+            message.channel.send("Please specify a valid rating range for your challenge, or leave it blank to use the default (2000-2200).")
+            return
+        }
+
+        let challengeInChannel = false
+        let challengeObject = {
+            challengeRatingRange: challengeRatingRange,
+            challengeLevel: challengeLevel,
+            challengeIncorrect: challengeIncorrect,
+            message: message
+        }
+        for (x in challenges) {
+            if (challenges[x].message.channel == message.channel) {
+                challenges[x] = challengeObject
+                challengeInChannel = true
+            }
+        }
+        if (challengeInChannel == false) {
+            challenges.push(challengeObject)
+        }
+
+        newPuzzle(challengeLevel, challengeRatingRange[0], challengeRatingRange[1])
     }
 
     if (command == "help") {
