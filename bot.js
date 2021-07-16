@@ -91,7 +91,8 @@ var challenges = [];
 const prefix = "bc";
 
 client.on('message', async message => {
-	if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
+	if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot ||
+    !message.content.toLowerCase().startsWith("bc!") || !message.content.toLowerCase().startsWith("bc.")) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
 
@@ -225,7 +226,7 @@ client.on('message', async message => {
     if (command == "test") {
         message.channel.send("Hi")
     }
-    if (command == "puzzle") {
+    if (command == "puzzle"  || command == "p"  || command == "puz" || command == "puzz") {
         let messageArray = message.content.split(" ");
         let level = 3
         let lowRating
@@ -377,7 +378,7 @@ client.on('message', async message => {
             })
 
     }
-    if (command == "solution") {
+    if (command == "solution" || command == "s"  || command == "sol") {
         let puzzleInChannel = false
 
         
@@ -437,7 +438,7 @@ client.on('message', async message => {
         }
     }
 
-    if (command == "move") {
+    if (command == "move" || command == "m") {
         let messageArray = message.content.split(" ");
         let move = messageArray[1]
         let puzzleInChannel = false
@@ -596,7 +597,7 @@ client.on('message', async message => {
         }
     }
 
-    if (command == "challenge") {
+    if (command == "challenge" || command == "chal" || command == "chall" || command == "ch") {
         
         // start a puzzle challenge. Do blind puzzles at a specified rating range, starting from level 3 and going up each time
         // you get it right on the first try. 
@@ -646,15 +647,16 @@ client.on('message', async message => {
         newPuzzle(challengeObject.challengeLevel, challengeObject.challengeRatingRange[0], challengeObject.challengeRatingRange[1])
     }
 
-    if (command == "help") {
+    if (command == "help" || command == "h") {
         const embed = new Discord.MessageEmbed()
             .setTitle("Command List")
             .addFields(
-                { name: 'bc!help', value: 'Displays this menu.'},
-                { name: 'bc!puzzle [rating range] [level]', value: 'Randomly generates a blind tactics puzzle. The level is how many moves you have to visualize (default is 3). Example: `bc!puzzle 1500-1600 3`.' },
-                { name: 'bc!move [move]', value: 'Attempts an answer to the current puzzle. The move can be in standard algebraic notation (Ke2) or UCI format (e1e2).' },
-                { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it.'},
-                { name: 'bc!challenge [rating range]', value: 'Starts a new challenge. Solve puzzles starting at level 3 and going up every time you get one correct. Default rating range is 2000-2200.'}
+                { name: 'prefixes', value: '"bc!", "bc.", and "bc" are all valid prefixes.'},
+                { name: 'bc!help', value: 'Displays this menu. \n(Aliases: h)'},
+                { name: 'bc!puzzle [rating range] [level]', value: 'Randomly generates a blind tactics puzzle. The level is how many moves you have to visualize (default is 3). Example: `bc!puzzle 1500-1600 3`.\n(Aliases: p, puz, puzz)' },
+                { name: 'bc!move [move]', value: 'Attempts an answer to the current puzzle. The move can be in standard algebraic notation (Ke2) or UCI format (e1e2). \n(Aliases: m)' },
+                { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it. \n(Aliases: s, sol)'},
+                { name: 'bc!challenge [rating range]', value: 'Starts a new challenge. Solve puzzles starting at level 3 and going up every time you get one correct. Default rating range is 2000-2200. \n(Aliases: ch, chal, chall)'}
             )
                 // { name: '', value: ''}
 
