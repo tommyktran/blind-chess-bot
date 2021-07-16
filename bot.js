@@ -102,6 +102,15 @@ client.on('message', async message => {
         // Select a random puzzle from lichess_db_puzzle.csv
         // let puzzle = data[getRandomInt(data.length)]
         let puzzle
+
+        let challengeInChannel = false
+        let currentChallenge
+        for (x in challenges) {
+            if (challenges[x].message.channel == message.channel) {
+                challengeInChannel = true
+                currentChallenge = challenges[x]
+            }
+        }
     
         if (lowRating < highRating) {
             let tries = 0
@@ -169,6 +178,12 @@ client.on('message', async message => {
                     .setImage(getJinChess(chess.fen(), player))
                     .setDescription("Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
                     .setFooter("(" + player + " to move)")
+
+                if (challengeInChannel) {
+                    embed.setTitle("Blind Challenge - Level " + level)
+                    embed.setDescription("Challenge Rating: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[1] + "Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
+
+                }
     
                 //For answers. Stores puzzles in an array based on channels
                 let puzzleInChannel = false;
@@ -495,11 +510,12 @@ client.on('message', async message => {
                                     embed.setTitle('Challenge Ended')
                                     embed.setDescription("**" + puzzles[x].currentSolution.join(" ") + "**\n" + "Correct! That's the end of the puzzle." +
                                     "\nYour challenge has ended.\nRating range: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[0] +
-                                    "\nVisualization level: " + currentChallenge.challengeLevel - 1)
+                                    "\nVisualization level: " + (currentChallenge.challengeLevel - 1))
 
                                     challenges.splice(challenges.indexOf(currentChallenge), 1)
                                 } else {
                                     embed.setTitle('Challenge Ongoing')
+                                    embed.setDescription("**" + puzzles[x].currentSolution.join(" ") + "**\n" + "Correct! That's the end of the puzzle.")
                                     currentChallenge.challengeLevel++
                                     newPuzzle(currentChallenge.challengeLevel, currentChallenge.challengeRatingRange[0], currentChallenge.challengeRatingRange[1])
                                 }
@@ -612,6 +628,10 @@ client.on('message', async message => {
             challenges.push(challengeObject)
         }
 
+        const embed = new Discord.MessageEmbed()
+            .setTitle("New Challenge")
+            .setDescription("You're starting a new challenge at rating range **" + challengeObject.challengeRatingRange[0] + "-" + challengeObject.challengeRatingRange[1] + "**. Starting at visualization level 3, solve puzzles and increase the level by 1 each time you get the puzzles correct.")
+
         newPuzzle(challengeObject.challengeLevel, challengeObject.challengeRatingRange[0], challengeObject.challengeRatingRange[1])
     }
 
@@ -622,7 +642,8 @@ client.on('message', async message => {
                 { name: 'bc!help', value: 'Displays this menu.'},
                 { name: 'bc!puzzle [rating range] [level]', value: 'Randomly generates a blind tactics puzzle. The level is how many moves you have to visualize (default is 3). Example: `bc!puzzle 1500-1600 3`.' },
                 { name: 'bc!move [move]', value: 'Attempts an answer to the current puzzle. The move can be in standard algebraic notation (Ke2) or UCI format (e1e2).' },
-                { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it.'}
+                { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it.'},
+                { name: 'bc!challenge [rating range]', value: 'Starts a new challenge. Solve puzzles starting at level 3 and going up every time you get one correct. Default rating range is 2000-2200.'}
             )
                 // { name: '', value: ''}
 
