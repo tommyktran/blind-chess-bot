@@ -88,12 +88,22 @@ var challenges = [];
 
 
 
-const prefix = "bc";
+const prefixes = ["bc", "bc!", "bc."]
+var prefixUsed
 
 client.on('message', async message => {
-	if ((!message.content.toLowerCase().startsWith(prefix.toLowerCase()) &&
-    !message.content.toLowerCase().startsWith("bc!") && !message.content.toLowerCase().startsWith("bc.")) || message.author.bot) return;
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	// if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
+    if (message.author.bot) {
+        return
+    } else if (message.content.toLowerCase().startsWith(prefixes[0].toLowerCase())) {
+        prefixUsed = prefixes[0];
+    } else if (message.content.toLowerCase().startsWith(prefixes[1].toLowerCase())) {
+        prefixUsed = prefixes[1];
+    } else if (message.content.toLowerCase().startsWith(prefixes[2].toLowerCase())) {
+        prefixUsed = prefixes[2];
+    }
+    
+	const args = message.content.slice(prefixUsed.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
 
     function newPuzzle(level, lowRating, highRating) {
