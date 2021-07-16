@@ -194,7 +194,7 @@ client.on('message', async message => {
 
                 if (challengeInChannel) {
                     embed.setTitle("Blind Challenge - Level " + level)
-                    embed.setDescription("Challenge Rating: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[1] + "\nRating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
+                    embed.setDescription("Challenge Rating: " + currentChallenge.challengeRatingRange[0] + "-" + currentChallenge.challengeRatingRange[1] + "\nPuzzle Rating: ||**" + puzzle[3] + "**||\n\nVisualize the moves below, then find the tactic that happens after. Answer with `bc!move (your move)`.\n\n" + "**" + movesToVisualize.join(" ") + "**")
 
                 }
     
@@ -609,7 +609,7 @@ client.on('message', async message => {
         }
     }
 
-    if (command == "challenge" || command == "chal" || command == "chall" || command == "ch") {
+    if (command == "challenge" || command == "chal" || command == "chall" || command == "ch" || command == "c") {
         
         // start a puzzle challenge. Do blind puzzles at a specified rating range, starting from level 3 and going up each time
         // you get it right on the first try. 
@@ -668,7 +668,7 @@ client.on('message', async message => {
                 { name: 'bc!puzzle [rating range] [level]', value: 'Randomly generates a blind tactics puzzle. The level is how many moves you have to visualize (default is 3). Example: `bc!puzzle 1500-1600 3`.\n(Aliases: p, puz, puzz)' },
                 { name: 'bc!move [move]', value: 'Attempts an answer to the current puzzle. The move can be in standard algebraic notation (Ke2) or UCI format (e1e2). \n(Aliases: m)' },
                 { name: 'bc!solution', value: 'Displays the solution to the current puzzle and ends it. \n(Aliases: s, sol)'},
-                { name: 'bc!challenge [rating range]', value: 'Starts a new challenge. Solve puzzles starting at level 3 and going up every time you get one correct. Default rating range is 2000-2200. \n(Aliases: ch, chal, chall)'}
+                { name: 'bc!challenge [rating range]', value: 'Starts a new challenge. Solve puzzles starting at level 3 and going up every time you get one correct. Default rating range is 2000-2200. \n(Aliases: c, ch, chal, chall)'}
             )
                 // { name: '', value: ''}
 
