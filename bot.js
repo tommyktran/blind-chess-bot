@@ -91,8 +91,8 @@ var challenges = [];
 const prefix = "bc";
 
 client.on('message', async message => {
-	if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot ||
-    !message.content.toLowerCase().startsWith("bc!") || !message.content.toLowerCase().startsWith("bc.")) return;
+	if ((!message.content.toLowerCase().startsWith(prefix.toLowerCase()) &&
+    !message.content.toLowerCase().startsWith("bc!") && !message.content.toLowerCase().startsWith("bc.")) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
 
