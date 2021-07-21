@@ -680,6 +680,18 @@ client.on('message', async message => {
 
         message.channel.send(embed)
     }
+
+    if (command == "ba") {
+        const embed = new Discord.MessageEmbed()
+            .setTitle("Hi there!")
+            .addFields(
+                {}
+            )
+            .setThumbnail(
+                'https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/portrait/0001/Happy.png'
+            )
+            .setDescription('"Testing testing. Testing, testing testing... testing!"')
+    }
 })
  
 
