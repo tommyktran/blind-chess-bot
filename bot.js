@@ -691,7 +691,9 @@ client.on('message', async message => {
                 'https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/portrait/0001/Happy.png'
             )
             .setDescription('"Testing testing. Testing, testing testing... testing!"')
+        message.channel.send(embed);
     }
+
 })
  
 
