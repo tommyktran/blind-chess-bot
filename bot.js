@@ -350,11 +350,13 @@ client.on('message', async message => {
                 let moves = chess.history();
                 chess.reset();
 
+                let oddNumberMoveErrorNumber = 0;
                 if (oddNumberMoveError(moveNumber, movesBack)) {
+                    oddNumberMoveErrorNumber = 1;
                     chess.move(moves[0])
                 }
 
-                for (let y = 0; y < moveNumber + movesBack; y++) {
+                for (let y = oddNumberMoveErrorNumber; y < moveNumber + movesBack; y++) {
                     chess.move(moves[y]);
                     if (y >= moveNumber) {
                         movesToVisualize.push(moves[y])
