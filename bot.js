@@ -339,8 +339,8 @@ client.on('message', async message => {
         let puzzleLink = "https://lichess.org/training/" + puzzle[0]
         let player
 
-        // moveNumber -= movesBack
-        moveNumber = subtractMovesBack(moveNumber, movesBack)
+        moveNumber -= movesBack
+        // moveNumber = subtractMovesBack(moveNumber, movesBack)
 
         // message.channel.send(gameId[0])
 
