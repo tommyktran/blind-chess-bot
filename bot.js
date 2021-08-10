@@ -339,8 +339,9 @@ client.on('message', async message => {
         let puzzleLink = "https://lichess.org/training/" + puzzle[0]
         let player
 
+        moveNumberX = subtractMovesBack(moveNumber, movesBack)
+
         moveNumber -= movesBack
-        // moveNumber = subtractMovesBack(moveNumber, movesBack)
 
         // message.channel.send(gameId[0])
 
@@ -365,7 +366,8 @@ client.on('message', async message => {
 
                 chess.reset();
 
-                for (let y = 0; y < subtractMovesBack(moveNumber, movesBack); y++) {
+                //used to be moveNumber
+                for (let y = 0; y < moveNumberX; y++) {
                     chess.move(moves[y]);
                 }
                 
