@@ -69,6 +69,13 @@ function subtractMovesBack(movenumber, movesback) {
         return movenumber - movesback;
     }
 }
+function oddNumberMoveError(movenumber, movesback) {
+    if (movenumber%2 == 1 && movesback > movenumber) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 var puzzles = [];
 
@@ -164,8 +171,8 @@ client.on('message', async message => {
         let puzzleLink = "https://lichess.org/training/" + puzzle[0]
         let player
     
-        // moveNumber -= movesBack
-        moveNumber = subtractMovesBack(moveNumber, movesBack)
+        moveNumber -= movesBack
+        // moveNumber = subtractMovesBack(moveNumber, movesBack)
     
         // message.channel.send(gameId[0])
     
@@ -174,6 +181,10 @@ client.on('message', async message => {
                 chess.load_pgn(result, {sloppy: true})
                 let moves = chess.history();
                 chess.reset();
+
+                if (oddNumberMoveError(moveNumber, movesBack)) {
+                    chess.move(moves[0])
+                }
     
                 for (let y = 0; y < moveNumber + movesBack; y++) {
                     chess.move(moves[y]);
@@ -338,6 +349,10 @@ client.on('message', async message => {
                 chess.load_pgn(result, {sloppy: true})
                 let moves = chess.history();
                 chess.reset();
+
+                if (oddNumberMoveError(moveNumber, movesBack)) {
+                    chess.move(moves[0])
+                }
 
                 for (let y = 0; y < moveNumber + movesBack; y++) {
                     chess.move(moves[y]);
