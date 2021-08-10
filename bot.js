@@ -339,6 +339,7 @@ client.on('message', async message => {
         let puzzleLink = "https://lichess.org/training/" + puzzle[0]
         let player
 
+        moveNumberY = moveNumber
         moveNumberX = subtractMovesBack(moveNumber, movesBack)
 
         moveNumber -= movesBack
@@ -360,7 +361,7 @@ client.on('message', async message => {
                 for (let y = 0; y < moveNumber + movesBack; y++) {
                     chess.move(moves[y]);
                     if (y >= moveNumber) {
-                        if (!(oddNumberMoveError(moveNumber, movesBack) && y == 0)) movesToVisualize.push(moves[y])
+                        if (!(oddNumberMoveError(moveNumberY, movesBack) && y == 0)) movesToVisualize.push(moves[y])
                     }
                 }
 
