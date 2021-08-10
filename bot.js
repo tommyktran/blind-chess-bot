@@ -62,6 +62,14 @@ function getJinChess(fen, player) {
     return string
 }
 
+function subtractMovesBack(movenumber, movesback) {
+    if (movenumber%2 == 1 && movesback > movenumber) {
+        return 1;
+    } else {
+        return movenumber - movesback;
+    }
+}
+
 var puzzles = [];
 
 function goToMove(moves, number) {
@@ -156,7 +164,8 @@ client.on('message', async message => {
         let puzzleLink = "https://lichess.org/training/" + puzzle[0]
         let player
     
-        moveNumber -= movesBack
+        // moveNumber -= movesBack
+        moveNumber = subtractMovesBack(moveNumber, movesBack)
     
         // message.channel.send(gameId[0])
     
@@ -319,7 +328,8 @@ client.on('message', async message => {
         let puzzleLink = "https://lichess.org/training/" + puzzle[0]
         let player
 
-        moveNumber -= movesBack
+        // moveNumber -= movesBack
+        moveNumber = subtractMovesBack(moveNumber, movesBack)
 
         // message.channel.send(gameId[0])
 
@@ -679,19 +689,6 @@ client.on('message', async message => {
                 // { name: '', value: ''}
 
         message.channel.send(embed)
-    }
-
-    if (command == "ba") {
-        const embed = new Discord.MessageEmbed()
-            .setTitle("Hi there!")
-            .addFields(
-                {}
-            )
-            .setThumbnail(
-                'https://raw.githubusercontent.com/PMDCollab/SpriteCollab/master/portrait/0001/Happy.png'
-            )
-            .setDescription('"Testing testing. Testing, testing testing... testing!"')
-        message.channel.send(embed);
     }
 
 })
