@@ -365,7 +365,7 @@ client.on('message', async message => {
 
                 chess.reset();
 
-                for (let y = 0; y < moveNumber; y++) {
+                for (let y = 0; y < subtractMovesBack(moveNumber, movesBack); y++) {
                     chess.move(moves[y]);
                 }
                 
