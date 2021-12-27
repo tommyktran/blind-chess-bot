@@ -56,7 +56,7 @@ function getJinChess(fen, player) {
     URI += fen
     URI += "&tm=" + player
     URI += "&s=l"
-    URI += "&ps=merida-flat&cm=o"
+    URI += "&ps=merida-flat&cm=r"
     URI = encodeURI(URI)
     string += URI
     return string
