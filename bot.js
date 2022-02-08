@@ -18,14 +18,7 @@ var data = fs.readFileSync('lichess_db_puzzle.csv')
 
 client.on('ready', () => {
     console.log('I am ready!');
-    bot.user.setPresence({
-        status: 'online',
-        game: {
-            name: 'bc!puzzle',
-            type: 'Playing',
-            url: "https://discordapp.com/"
-        }
-    })
+    client.user.setActivity('bchelp', { type: 'PLAYING'})
 });
 
 function getRandomInt(max) {
