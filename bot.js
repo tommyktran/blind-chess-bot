@@ -7,6 +7,7 @@ var fs = require('fs');
 const { Chess } = require('chess.js');
 const fetch = require('node-fetch');
 const { url } = require('inspector');
+var sqlite3 = require('sqlite3');
 
 const chess = new Chess()
 
