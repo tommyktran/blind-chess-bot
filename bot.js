@@ -8,7 +8,7 @@ const { Chess } = require('chess.js');
 const fetch = require('node-fetch');
 const { url } = require('inspector');
 var sqlite3 = require('sqlite3');
-
+let db;
 const chess = new Chess()
 
 var data = fs.readFileSync('lichess_db_puzzle.csv')
@@ -294,7 +294,7 @@ client.on('message', async message => {
     
     function createDatabase() {
         message.channel.send("Creating db")
-        var newdb = new sqlite3.Database('mcu.db', (err) => {
+        db = new sqlite3.Database('mcu.db', (err) => {
             if (err) {
                 console.log("Getting error " + err);
                 exit(1);
