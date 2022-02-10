@@ -106,6 +106,7 @@ var challenges = [];
 
 const prefixes = ["bc", "bc!", "bc."]
 var prefixUsed
+let thing = 1;
 
 client.on('message', async message => {
 	// if (!message.content.toLowerCase().startsWith(prefix.toLowerCase()) || message.author.bot) return;
@@ -256,6 +257,11 @@ client.on('message', async message => {
     
     }
     
+    if (command == "q") {
+        thing++
+        message.channel.send(thing)
+    }
+
     if (command == "test") {
         message.channel.send("Hi")
     }
