@@ -293,6 +293,7 @@ client.on('message', async message => {
     }
     
     function createDatabase() {
+        message.channel.send("Creating db")
         var newdb = new sqlite3.Database('mcu.db', (err) => {
             if (err) {
                 console.log("Getting error " + err);
