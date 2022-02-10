@@ -299,7 +299,7 @@ client.on('message', async message => {
                 console.log("Getting error " + err);
                 exit(1);
             }
-            createTables(newdb);
+            createTables(db);
         });
     }
 
