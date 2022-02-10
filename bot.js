@@ -304,7 +304,7 @@ client.on('message', async message => {
     }
 
     if (command == "f") {
-        new sqlite3.Database('./mcu.db', sqlite3.OPEN_READWRITE, (err) => {
+        db = new sqlite3.Database('./mcu.db', sqlite3.OPEN_READWRITE, (err) => {
             if (err && err.code == "SQLITE_CANTOPEN") {
                 createDatabase();
                 return;
