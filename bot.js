@@ -733,6 +733,8 @@ client.on('message', async message => {
     if ((command == "leaguereminder" || command == "lr") && message.author.id == '198293144842928139') {
         let messageArray = message.content.split(" ");
         let differenceMinus30Mins = dateDifference(messageArray[1]) - 1800000;
+        message.channel.send(differenceMinus30Mins)
+        message.channel.send(dateDifference(messageArray[1]))
         let title = messageArray[2];
         let roleId = '1111101170778390611';
         let reminder = setTimeout(() => {
