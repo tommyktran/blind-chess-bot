@@ -91,7 +91,30 @@ var challenges = [];
 // }
 
 
+function dateDifference(date) {
+    return date.getTime() - Date.now()
+}
+function pad(number) {
+    var result = "" + number;
+    if (result.length < 2) {
+        result = "0" + result;
+    }
 
+    return result;
+}
+
+function millisToDaysHoursMinutes(millis) {
+    var seconds = millis / 1000;
+    var totalMinutes = seconds / 60;
+
+    var days = totalMinutes / minutesPerDay;
+    totalMinutes -= minutesPerDay * days;
+    var hours = totalMinutes / 60;
+    totalMinutes -= hours * 60; 
+
+    return days + " days and " + pad(hours) + " hours";
+}
+let reminders = [];
 
 
 const prefixes = ["bc", "bc!", "bc."]
@@ -701,7 +724,37 @@ client.on('message', async message => {
         message.channel.send(embed)
     }
 
+    if ((command == "leaguereminder" || command == "lr") && message.author.id == '198293144842928139') {
+        let messageArray = message.content.split(" ");
+        let differenceMinus30Mins = dateDifference(messageArray[1]) - 1800000;
+        let title = messageArray[2];
+        let roleId = '1111101170778390611';
+        let reminder = setTimeout(() => {
+            message.channel.send(`<@&${roleId}>: Game time! ${title} is happening in 30 minutes!`)
+        }, differenceMinus30Mins)
+
+        reminders.push({reminder: reminder, title: title, time: messageArray[1]})
+    }
+    if ((command == "viewreminders" || command == "vr") && message.author.id == '198293144842928139') {
+        let result;
+        for (let reminder of reminders) {
+            result += ` ${reminders.indexOf(reminder)}. ${reminder.title} - in ${millisToDaysHoursMinutes(dateDifference(reminder.time))}\n`
+        }
+        message.channel.send(`\`\`\`Here are all the reminders you have set:\n${result}\`\`\``)
+    }
+
+    if ((command == "clearreminder" || command == "cr") && message.author.id == '198293144842928139') {
+        let messageArray = message.content.split(" ");
+        if (reminders.length - 1 >= messageArray[1]) {
+            reminders.splice(messageArray[1], 1)
+            message.channel.send("Got it! Reminder removed.")
+        }
+    } 
 })
+
+
+
+
  
 
 // THIS  MUST  BE  THIS  WAY
