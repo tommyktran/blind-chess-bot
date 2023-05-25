@@ -92,7 +92,7 @@ var challenges = [];
 
 
 function dateDifference(date) {
-    return new Date(date).getTime() - Date.now()
+    return (new Date(parseInt(date)).getTime()) - Date.now()
 }
 function pad(number) {
     var result = "" + number;
