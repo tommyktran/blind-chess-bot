@@ -761,8 +761,8 @@ ${result}\`\`\``)
         }
     } 
 
-    if ((command == "test") && message.author.id == '198293144842928139') {
-        client.channels.get('1111119052564332696').send('testing bitches');
+    if ((command == "test2") && message.author.id == '198293144842928139') {
+        client.channels.cache.get('1111119052564332696').send('testing bitches');
     }
 })
 
