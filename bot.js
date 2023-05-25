@@ -738,7 +738,7 @@ client.on('message', async message => {
         let title = messageArray[2];
         let roleId = '1111101170778390611';
         let reminder = setTimeout(() => {
-            message.channel.send(`<@&${roleId}>: Game time! ${title} is happening in 30 minutes!`)
+            client.channels.cache.get('1111119052564332696').send(`<@&${roleId}>: Game time! ${title} is happening in 30 minutes!`)
             reminders.splice(findReminderByTitle(title), 1)
         }, differenceMinus30Mins)
 
