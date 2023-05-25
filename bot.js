@@ -747,9 +747,10 @@ client.on('message', async message => {
     if ((command == "viewreminders" || command == "vr") && message.author.id == '198293144842928139') {
         let result;
         for (let reminder of reminders) {
-            result += ` ${reminders.indexOf(reminder)}. ${reminder.title} - in ${millisToDaysHoursMinutes(dateDifference(reminder.time))}\n`
+            result += `${reminders.indexOf(reminder)}. ${reminder.title} - in ${millisToDaysHoursMinutes(dateDifference(reminder.time))}\n`
         }
-        message.channel.send(`\`\`\`Here are all the reminders you have set:\n${result}\`\`\``)
+        message.channel.send(`\`\`\`Here are all the reminders you have set:
+${result}\`\`\``)
     }
 
     if ((command == "clearreminder" || command == "cr") && message.author.id == '198293144842928139') {
