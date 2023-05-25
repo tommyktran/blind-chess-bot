@@ -102,7 +102,7 @@ function pad(number) {
 
     return result;
 }
-
+minutesPerDay = 60 * 24;
 function millisToDaysHoursMinutes(millis) {
     var seconds = millis / 1000;
     var totalMinutes = seconds / 60;
@@ -116,6 +116,12 @@ function millisToDaysHoursMinutes(millis) {
 }
 let reminders = [];
 
+function findReminderByTitle(title) {
+    for (let reminder of reminders) {
+        if (reminder.title == title) return reminder;
+    }
+    return 0;
+}
 
 const prefixes = ["bc", "bc!", "bc."]
 var prefixUsed
@@ -731,6 +737,7 @@ client.on('message', async message => {
         let roleId = '1111101170778390611';
         let reminder = setTimeout(() => {
             message.channel.send(`<@&${roleId}>: Game time! ${title} is happening in 30 minutes!`)
+            reminders.splice(findReminderByTitle(title), 1)
         }, differenceMinus30Mins)
 
         reminders.push({reminder: reminder, title: title, time: messageArray[1]})
